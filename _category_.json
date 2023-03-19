@@ -1,8 +1,8 @@
 {
-  "label": "Android",
+  "label": "Flutter",
   "position": 1,
   "link": {
     "type": "generated-index",
-    "description": "Android SDKs Docs"
+    "description": "Flutter SDKs Docs"
   }
 }
