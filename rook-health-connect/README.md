@@ -1,34 +1,43 @@
-# Rook Health Connect SDK
+# Rook Health Connect package
 
-This SDK enables apps to extract data from Google Health Connect. `rook_health_connect` is part of Rook Extraction, a series of SDKs dedicated to extracting Health Data from a variety of [Data Sources](https://docs.tryrook.io/docs/Definitions#data-sources).
+This package enables apps to extract data from Google Health Connect. **rook_health_connect** is
+part
+of Rook Extraction, a series of packages dedicated to extracting Health Data from a variety of
+[Data Sources](https://docs.tryrook.io/docs/Definitions#data-sources).
 
-This SDK was developed with the Health Connect [native SDK](https://developer.android.com/guide/health-and-fitness/health-connect), so all its limitations and requirements apply to this SDK as well.
+* This package was developed with the Health
+  Connect [native SDK](https://developer.android.com/guide/health-and-fitness/health-connect), so
+  all its limitations and requirements apply to this package as well.
 
 ## Features
 
-- Check for Health Connect app availability.
-- Check and request permissions.
-- Retrieve a [Sleep Summary](https://docs.tryrook.io/docs/DataStructure/SleepHealth#summaries) from a specific day.
-- Retrieve a [Physical Summary](https://docs.tryrook.io/docs/DataStructure/PhysicalHealth#summaries) from a specific day.
-- Retrieve a [Body Summary](https://docs.tryrook.io/docs/DataStructure/BodyHealth#summaries) from a specific day.
+* Check for Health Connect APK availability.
+* Check and request permissions.
+* Retrieve a [Sleep Summary](https://docs.tryrook.io/docs/DataStructure/SleepHealth#summaries) from
+  a specific day.
+* Retrieve a [Physical Summary](https://docs.tryrook.io/docs/DataStructure/PhysicalHealth#summaries)
+  from a specific day.
+* Retrieve a [Body Summary](https://docs.tryrook.io/docs/DataStructure/BodyHealth#summaries) from a
+  specific day.
 
 ## Installation
 
-![Maven Central](https://img.shields.io/maven-central/v/com.rookmotion.android/rook-health-connect?color=%23F44336)
+![Pub Version](https://img.shields.io/pub/v/rook_health_connect?color=%23F44336)
 
-Add the following line to your dependencies (app-level build.gradle):
-
-```groovy
-implementation 'com.rookmotion.android:rook-health-connect:version'
+```text
+flutter pub add rook_health_connect
 ```
+
+This package requires flutter `3.3.0` or higher.
 
 ## Getting started
 
-To get authorization to use this SDK, you'll need to install and configure the [rook-auth](https://mvnrepository.com/artifact/com.rookmotion.android/rook-auth) SDK.
+To get authorization to use this package, you'll need to install and configure
+the [rook-auth](https://pub.dev/packages/rook_auth) package.
 
-### Android Configuration
+### Android configuration
 
-In your **AndroidManifest.xml**, add a query for Health Connect:
+In your **AndroidManifest.xml** add a query for Health Connect
 
 ```xml
 
@@ -37,10 +46,9 @@ In your **AndroidManifest.xml**, add a query for Health Connect:
         <package android:name="com.google.android.apps.healthdata" />
     </queries>
 </manifest>
-
 ```
 
-Then declare the health permissions used by this SDK:
+Then declare the health permissions used by this package:
 
 ```text
 <uses-permission android:name="android.permission.health.READ_SLEEP" />
@@ -63,208 +71,263 @@ Then declare the health permissions used by this SDK:
 <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE" />
 <uses-permission android:name="android.permission.health.READ_HYDRATION" />
 <uses-permission android:name="android.permission.health.READ_BODY_TEMPERATURE" />
-
 ```
 
-Finally, inside the Activity that you use to display your app's privacy policy, add an intent filter for the Health Connect permissions action:
+Finally, inside your MainActivity declaration add an intent filter for the Health Connect
+permissions action:
 
 ```xml
 
-<activity android:name=".ui.health_connect.HCPrivacyPolicyActivity" android:enabled="true"
-    android:exported="true">
-
+<activity android:name=".MainActivity">
     <intent-filter>
         <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
     </intent-filter>
 </activity>
-
 ```
 
-In your build.gradle (app), set your min and target sdk version like below:
+In your build.gradle (app) set your min and target sdk version like below:
 
 ```groovy
 minSdk 26
 targetSdk 33
-
 ```
 
-This package will only work with devices of SDK 28 or later. The `minSdk 26` is to keep compatibility with other Rook SDKs that can be used with older SDKs.
+* This package will only work with devices of a minSdk 28 or later. The `minSdk 26` is to keep
+  compatibility with other Rook packages that can be used with older package.
+
+In the app folder create a **proguard-rules.pro** file and add the following:
+
+```text
+-keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
+```
+
+Finally in your build.gradle (app) add the `proguard-rules.pro` from previous step:
+
+```groovy
+buildTypes {
+    release {
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+}
+```
 
 ### Logging
 
-If you want to see the logs generated by this SDK, when creating an instance of `RookHealthConnectManager`, provide a logLevel:
+If you want to see the logs generated by this package
 
+Install the logging package:
+
+```yaml
+logging: ">=1.0.0 <2.0.0"
 ```
-RookHealthConnectManager(logLevel = "ADVANCED")
 
+Add the following snippet in your `main()` function:
+
+```dart
+void main() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    if (kDebugMode) {
+      print('${record.level.name}: ${record.time}: ${record.message}');
+    }
+  });
+
+  runApp(RookApp());
+}
 ```
-
-Available levels:
-
-- "ADVANCED" -> All logs from API. All logs from SDK.
-- "BASIC" -> Basic logs from API. All logs from SDK.
-- "NONE" -> No logs.
 
 ## Usage
 
-Create an instance of `RookHealthConnectManager` providing a context:
+Import rook_health_connect:
 
-```kotlin
-val manager = RookHealthConnectManager(context)
+```dart
+import 'package:rook_health_connect/rook_health_connect.dart';
+```
 
+Create an instance of `RookHealthConnectManager`:
+
+```dart
+
+final RookHealthConnectManager manager = RookHealthConnectManager();
 ```
 
 ### Privacy policy
 
-Health Connect requires a privacy policy where you inform your users how you will handle and use their data.
+Health Connect requires a privacy policy where you inform your users how you will handle and use
+their data.
 
-In the [Android configuration](#android-configuration) section, an intent filter was added to listen when your app is launched from said intent. You can use a dedicated Activity, or if you are using a **Single activity architecture**, you can use Deeplink. You can find an example of the first approach in our demo app.
+In the [android configuration](#android-configuration) section an intent filter was added to listen
+when your app is launched from said intent you can code
+your [own](https://docs.flutter.dev/get-started/flutter-for/android-devs#how-do-i-handle-incoming-intents-from-external-applications-in-flutter)
+implementation from scratch or use a package
+like [receive_intent](https://pub.dev/packages/receive_intent). You can find an example of the
+second approach in our demo app.
 
 ### Check compatibility
 
-Before using any of the features of `rook_health_connect`, you need to ensure the user's device is compatible with Health Connect and check if the [APP](https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata) is installed.
+Before using any of the features of *rook_health_connect*, you need to ensure the user's device is
+compatible with Health Connect and check if
+the [APK](https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata) is
+installed.
 
-Call `checkAvailability` to check for the app. This will return an `AvailabilityStatus`.
+Call `checkAvailability`, this will return an `AvailabilityStatus`.
 
-| Status | Description | What to do |
-| --- | --- | --- |
-| INSTALLED | App is installed | Proceed to check permissions |
-| NOT_INSTALLED | App is not installed | Prompt the user to install Health Connect. |
-| NOT_SUPPORTED | This device does not support Health Connect | Take the user out of the Health Connect section |
+| Status       | Description                                 | What to do                                      |
+|--------------|---------------------------------------------|-------------------------------------------------|
+| installed    | APK is installed                            | Proceed to check permissions                    |
+| notInstalled | APK is not installed                        | Prompt the user to install Health Connect.      |
+| notSupported | This device does not support Health Connect | Take the user out of the Health Connect section |
 
 ### Permissions
 
 #### Check
 
-There are dedicated functions for each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars) (Sleep, Physical, and Body) to check permissions. These functions follow the convention: `has_data_type_Permissions`.
+There are dedicated functions for
+each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars)
+(Sleep, Physical, and Body) to check permissions. These functions follow the
+convention: `has_data_type_Permissions`
 
-You can also call `hasAllPermissions` to check if your app has all the permissions required to extract data from all health pillars.
+You can also call `hasAllPermissions` to check if your app has all the permissions required to
+extract data from all health pillars.
 
-```kotlin
-fun checkPermissions() {
-    scope.launch {
-        val result = manager.hasAllPermissions()
+```dart
+void checkPermissions() async {
+  final result = await manager.hasAllPermissions();
 
-        if (result) {
-            // The app has permissions.
-        } else {
-            // The app does not have permissions.
-        }
-    }
+  if (result) {
+    // The app has permissions.
+  } else {
+    // The app does not have permissions.
+  }
 }
-
 ```
 
 #### Request
 
-There are dedicated functions for each health pillar (Sleep, Physical, and Body) to request permissions. These functions follow the convention: `request_data_type_Permissions`.
+There are dedicated functions for
+each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars)
+(Sleep, Physical and Body) to request permissions. These functions follow the
+convention: `request_data_type_Permissions`
 
-You can also call `requestAllPermissions` and provide an `Activity` instance to request all health pillar permissions.
+You can also call `requestAllPermissions` to request all health pillar permissions.
 
-```kotlin
-fun requestPermissions(activity: Activity) {
-    val result = manager.requestAllPermissions(activity)
+```dart
+void requestPermissions() async {
+  final result = await manager.requestAllPermissions();
 
-    if (result) {
-        // A request to Health Connect to open the permissions screen was sent.
-        // Health Connect can receive the request but refuse to open the permissions screen. In those cases, 'result' will also be true
-    } else {
-        // The request was not sent.
-    }
+  if (result) {
+    // A request to Health Connect to open the permissions screen was send.
+    // Health Connect can receive the request but refuse to open the permissions screen, in those cases 'result' will also be true
+  } else {
+    // The request was not send.
+  }
 }
-
 ```
 
 **Permissions denied**
 
-If the user clicks cancel or navigates away from the permissions screen, Health Connect will take it as if the user denied the permissions.
+If the user clicks cancel or navigates away from the permissions screen, Health Connect will take it
+as if the user denied the permissions.
 
-If the user 'denies' the permissions 2 times, your app will be blocked by Health Connect. This is permanent and cannot be undone even if the user uninstalls your app.
+If the user 'denies' the permissions 2 times, your app will be blocked by Health Connect. This is
+permanent and cannot be undone even if the user uninstalls your app.
 
 When your app is blocked, any permissions request will be ignored.
 
-To solve this problem, we recommend you also include an `Open Health Connect` button in your permissions UI. This button will call `openHealthConnectSettings`, and your users can manually grant permissions to your app.
+To solve this problem, we recommend you also include an `Open Health Connect` button in your
+permissions UI. This button will call `openHealthConnectSettings`, there your users can manually
+grant permissions to your app.
 
-```kotlin
-fun openHealthConnectSettings() {
-    val result = manager.openHealthConnectSettings()
+```dart
+void openHealthConnectSettings() async {
+  final result = await manager.openHealthConnectSettings();
 
-    if (result) {
-        // A request to open Health Connect was sent.
-    } else {
-        // The request was not sent.
-    }
+  if (result) {
+    // A request to open Health Connect was send.
+  } else {
+    // The request was not send.
+  }
 }
-
 ```
 
 ### Retrieving data
 
-To retrieve any type of summary, you need to provide a date. This date cannot be the current day and cannot be older than 29 days. See the examples below:
+To retrieve any type of summary, you need to provide a date. This date cannot be the current
+day and cannot be older than 29 days. See the examples below:
 
-| Current date | Provided date | Is valid? |
-| --- | --- | --- |
-| @January 8, 2023 | @January 8, 2023 | No, the date is today |
-| @January 8, 2023 | @January 7, 2023 | Yes, the date is from yesterday |
-| @January 8, 2023 | @November 1, 2022 | No, the date is older than 29 days |
-| @January 8, 2023 | @January 1, 2023 | Yes, the date is 7 days old |
+| Current date | Provided date | Is valid?                          |
+|--------------|---------------|------------------------------------|
+| 2023-01-08   | 2023-01-08    | No, the date is from today         |
+| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday    |
+| 2023-01-08   | 2022-11-01    | No, the date is older than 29 days |
+| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old        |
 
-To get health data, call `get_data_type` and provide a `ZonedDateTime` instance of the day you want to retrieve the data from.
+To get health data, call `get_data_type` and provide a `DateTime` instance of the day you want to
+retrieve the data from.
 
-For example, if you want to get yesterday's sleep summary, call `getSleepSummary`. It will return a `SleepSummary` instance or throw an exception if an error happens or if there is no sleep data on that day.
+For example, if you want to get yesterday's sleep summary, call `getSleepSummary`. It will return
+an `SleepSummary` instance or throw an exception if an error happens
+or if there is no sleep data on that day.
 
-```kotlin
-fun getSleepSummary() {
-    scope.launch {
-        try {
-            val date = ZonedDateTime.now().minusDays(1)
-            val result = manager.getSleepSummary(date)
+```dart
+void getSleepSummary() async {
+  try {
+    final date = DateTime.now().subtract(const Duration(days: 1));
+    final result = await manager.getSleepSummary(date);
 
-            // Success
-        } catch (e: Exception) {
-            // Manage error
-        }
-    }
+    // Success
+  } catch (error) {
+    // Manage error
+  }
 }
-
 ```
 
 ### Keeping track of the last time a summary was retrieved
 
-Health Connect does not allow retrieving data in the background, so every time your users open your app, you should retrieve the data manually to help you retrieve the data of the days the user did not open your app. We store in preferences the last date data was retrieved from (even if that attempt resulted in no data being found).
+Health Connect does not allow retrieving data on background, so every time your users open your app
+you should retrieve the data manually to help you retrieve the data of the days the user did not
+open your app. We store in preferences the last date data was retrieved from (even if that attempt
+resulted in no data being found).
 
-Depending on the data type, there are multiple functions to retrieve that date. They follow the convention: `get_data_type_LastDate`.
+Depending on the data type, there are multiple functions to retrieve that date. They follow the
+convention: `get_data_type_LastDate`
 
-It will return a `ZonedDateTime` instance.
+It will return a `DateTime` instance.
 
 #### Example
 
-Let's suppose that one of your users opens the app on `2023-01-10`. The app then retrieves a sleep summary from yesterday (`2023-01-09`) with `getSleepSummary`, gets the summary, and sends it to the backend.
+Let's suppose that one of your users opens the app on `2023-01-10`, the app then retrieves a sleep
+summary from yesterday (`2023-01-09`) with `getSleepSummary`.
 
-Then the user forgets to open the app until `2023-01-15`. Then you'll call `getSleepSummaryLastDate`. It will return `2023-01-09` in a `ZonedDateTime` instance. Now, in a loop, you can recover data from the days the user did not open the app (`2023-01-10` to `2023-01-14`).
+Then the user forgets to open the app until `2023-01-15`, then you'll call `getSleepSummaryLastDate`
+it will return `2023-01-09` in a DateTime instance. Now, in a loop, you can recover data from
+the days the user did not open the app (`2023-01-10` to `2023-01-14`).
 
 An example using sleep summaries is detailed below:
 
-```kotlin
-fun recoverLostDays() {
-    scope.launch {
-        val today = LocalDate.now()
-        var date = manager.getSleepSummaryLastDate().toLocalDate()
-
-        date = date.plusDays(1)
-
-        while (date.isBefore(today)) {
-            try {
-                val result = manager.getSleepSummary(date.atStartOfDay(ZoneId.systemDefault()))
-
-                // Success
-            } catch (e: Exception) {
-                // Manage error
-            }
-
-            date = date.plusDays(1)
-        }
-    }
+```dart
+DateTime dateOnly(DateTime date) {
+  return DateTime(date.year, date.month, date.day);
 }
 
+void recoverLostDays() async {
+  const oneDay = Duration(days: 1);
+  final today = dateOnly(DateTime.now());
+
+  DateTime date = await manager.getSleepSummaryLastDate();
+
+  date = date.add(oneDay);
+
+  while (date.isBefore(today)) {
+    try {
+      final sleepSummary = await manager.getSleepSummary(date);
+
+      // Success
+    } catch (error) {
+      // Manage error
+    }
+
+    date = date.add(oneDay);
+  }
+}
 ```
