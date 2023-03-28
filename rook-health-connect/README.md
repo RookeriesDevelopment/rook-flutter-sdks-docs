@@ -163,7 +163,7 @@ implementation from scratch or use a package
 like [receive_intent](https://pub.dev/packages/receive_intent). You can find an example of the
 second approach in our demo app.
 
-### Check compatibility
+### Availability
 
 Before using any of the features of *rook_health_connect*, you need to ensure the user's device is
 compatible with Health Connect and check if
