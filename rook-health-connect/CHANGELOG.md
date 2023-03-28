@@ -4,6 +4,7 @@
 
 * Updated rook-health-connect (Kotlin)
   to [0.3.3](https://github.com/RookeriesDevelopment/rook-android-sdks-docs/blob/main/rook-health-connect/CHANGELOG.md#033)
+* `bloodPressureDayAvgSystolicDiastolic` on `BodySummary` changed to a nullable object.
 
 ## 0.2.0
 
