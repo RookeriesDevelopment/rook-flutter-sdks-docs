@@ -32,7 +32,8 @@
 
 ## 0.1.0
 
-* Updated rook-health-connect (Kotlin) to 0.1.0
+* Updated rook-health-connect (Kotlin)
+  to [0.1.0](https://github.com/RookeriesDevelopment/rook-android-sdks-docs/blob/main/rook-health-connect/CHANGELOG.md#010)
     * You may have to update your gradle plugin to **7.4.1**
     * You may have to update your kotlin plugin to **1.8.10**
 
