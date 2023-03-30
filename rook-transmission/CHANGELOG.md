@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.2
+
+* Fixed index constraint on granular data
+
+## 0.2.1
+
+* Fixed missing URI
+
 ## 0.2.0
 
 * Added granular data to:
