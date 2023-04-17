@@ -99,10 +99,10 @@ void enqueueSleep() async {
   try {
     final item = SleepSummaryItem(
       sourceOfData: 'Health Connect',
-      dateTime: '2023-01-06T22:00:22.065Z',
-      sleepStartDatetime: '2023-01-06T22:00:22.065Z',
-      sleepEndDatetime: '2023-01-07T12:00:04.013Z',
-      sleepDate: '2023-01-07',
+      dateTime: dateTime,
+      sleepStartDatetime: startDatetime,
+      sleepEndDatetime: startDatetime.add(const Duration(hours: 8)),
+      sleepDate: startDatetime,
       sleepDurationSeconds: 64800,
       timeInBedSeconds: 64800,
     );

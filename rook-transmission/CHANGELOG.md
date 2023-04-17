@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+* Changed String date and dateTime parameters to DateTime.
+
 ## 0.2.2
 
 * Fixed index constraint on granular data
