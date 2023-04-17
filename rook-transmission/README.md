@@ -11,10 +11,10 @@ This package allows apps to send health data to RookConnect servers.
 
 ## Installation
 
-![Pub Version](https://img.shields.io/pub/v/rook_users?color=%23F44336)
+![Pub Version](https://img.shields.io/pub/v/rook_transmission?color=%23F44336)
 
 ```text
-flutter pub add rook_users
+flutter pub add rook_transmission
 ```
 
 This package requires flutter `3.3.0` or higher.

@@ -6,6 +6,16 @@ This is the main package required by all rook packages to enable their usage.
 
 * Obtain and save authorization to use other rook packages with your client UUID.
 
+## Installation
+
+![Pub Version](https://img.shields.io/pub/v/rook_auth?color=%23F44336)
+
+```text
+flutter pub add rook_auth
+```
+
+This package requires flutter `3.3.0` or higher.
+
 ## Getting started
 
 ### Logging
