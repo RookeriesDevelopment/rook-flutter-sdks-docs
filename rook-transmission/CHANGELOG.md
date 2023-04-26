@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.1
+
+* Fixed auth error
+* Changed data types:
+  * BodySummaryItem
+    * temperatureDeltaCelsius → double?
+  * SleepSummaryItem
+    * temperatureMinimumCelsius → double?
+    * temperatureAvgCelsius → double?
+    * temperatureMaxCelsius → double?
+    * temperatureDeltaCelsius → double?
+    * saturationAvgPercentage → double?
+    * saturationMinPercentage → double?
+    * saturationMaxPercentage → double?
+
 ## 0.3.0
 
 * Changed String date and dateTime parameters to DateTime.
