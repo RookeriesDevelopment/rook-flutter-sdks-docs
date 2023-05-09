@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3
+
+* Updated schemas to isar `3.1.0+1`. Please verify you have this version before updating.
+
 ## 0.3.2
 
 * Fixed const error
