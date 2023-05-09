@@ -28,6 +28,26 @@ This package requires flutter `3.3.0` or higher.
 
 ### IOS configuration
 
+On root folder run:
+
+```text
+flutter pub get
+```
+
+On ios/Podfile add the following 
+
+```text
+platform :ios, '13.0'
+```
+
+On ios folder run:
+
+```text
+pod install
+```
+
+Open the ios folder with Xcode
+
 Add HealthKit capability to your Xcode project:
 
 1. Open your project in Xcode.
