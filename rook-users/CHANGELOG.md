@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+* Register Apple Health users
+
 ## 0.1.1
 
 * Fixed auth error
