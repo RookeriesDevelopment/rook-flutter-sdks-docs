@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+* Fixed physical summary crash
+
 ## 0.1.0
 
 All classes and enums now have AH at the beginning, e.g.:
