@@ -3,6 +3,9 @@
 ## 0.1.1
 
 * Fixed physical summary crash
+  * To apply update:
+    * Run `flutter pub get` on the root directory
+    * Run `pod update` or `pod install` on the ios directory
 
 ## 0.1.0
 
