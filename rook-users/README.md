@@ -9,7 +9,7 @@ their [Users](https://docs.tryrook.io/docs/Definitions/#User) in ROOK server.
 
 ## Installation
 
-![Pub Version](https://img.shields.io/pub/v/rook_users?color=%23F44336)
+![Pub Version](https://img.shields.io/pub/v/rook_users?style=for-the-badge&logo=flutter&color=7200F7)
 
 ```text
 flutter pub add rook_users

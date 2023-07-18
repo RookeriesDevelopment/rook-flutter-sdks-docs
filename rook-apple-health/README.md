@@ -18,7 +18,7 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 
 ## Installation
 
-![Pub Version](https://img.shields.io/pub/v/rook_apple_health?color=%23F44336)
+![Pub Version](https://img.shields.io/pub/v/rook_apple_health?style=for-the-badge&logo=flutter&color=7200F7)
 
 ```text
 flutter pub add rook_apple_health
