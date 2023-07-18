@@ -14,8 +14,12 @@ their [Users](https://docs.tryrook.io/docs/Definitions/#User) in ROOK server.
 ```text
 flutter pub add rook_users
 ```
+### Environment
 
-This package requires flutter `3.3.0` or higher.
+This package was developed with the following sdk constraints:
+
+* dart: ">=3.0.0 <4.0.0"
+* flutter: ">=3.0.0"
 
 ## Getting started
 
