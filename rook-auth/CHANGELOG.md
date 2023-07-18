@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0
+
+* Updated flutter and dart versions to ">=3.0.0 <4.0.0"
+* Updated http to ">=1.0.0 <2.0.0"
+
 ## 0.1.1
 
 * Fixed auth error

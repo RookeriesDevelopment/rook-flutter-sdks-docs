@@ -14,7 +14,12 @@ This is the main package required by all rook packages to enable their usage.
 flutter pub add rook_auth
 ```
 
-This package requires flutter `3.3.0` or higher.
+### Environment
+
+This package was developed with the following sdk constraints:
+
+* dart: ">=3.0.0 <4.0.0"
+* flutter: ">=3.0.0"
 
 ## Getting started
 
