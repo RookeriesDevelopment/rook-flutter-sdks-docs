@@ -46,6 +46,17 @@ README `Required depenpendencies` section for more details.
 The DateTime object provided when requesting health data must be in UTC, see README `Timezones` section for more
 details.
 
+**Last extraction date**
+
+The following functions have been removed:
+
+* getSleepSummaryLastDate
+* getPhysicalSummaryLastDate
+* getPhysicalEventsLastDate
+* getBodySummaryLastDate
+
+Instead, you should use `getLastExtractionDate` and provide a `HCRookDataType`
+
 **Other**
 
 * Updated flutter and dart versions to ">=3.0.0 <4.0.0"

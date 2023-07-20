@@ -287,7 +287,7 @@ void getSleepSummary() async {
 
 Health Connect does not allow retrieving data on background, so every time your users open your app
 you should retrieve the data manually to help you retrieve the data of the days the user did not
-open your app. We store in preferences the last date data was retrieved from (even if that attempt
+open your app. We store in preferences the last date data was retrieved (even if that attempt
 resulted in no data being found).
 
 Call `getLastExtractionDate(HCRookDataType rookDataType)` providing a `HCRookDataType`, e.g. if you want to retrieve

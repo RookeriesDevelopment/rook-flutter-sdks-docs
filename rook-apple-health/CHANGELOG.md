@@ -18,6 +18,20 @@ This version added new permissions, please ask your users for permissions again 
 From this version onwards the rook-apple-health will require the `equatable` package, see
 README `Required depenpendencies` section for more details.
 
+**Last extraction date**
+
+The following functions have been removed:
+
+* getSleepSummaryLastDate
+* getPhysicalSummaryLastDate
+* getPhysicalEventsLastDate
+* getBodySummaryLastDate
+
+Instead, you should use `getLastExtractionDate` and provide a `AHRookDataType`
+
+When calling `getLastExtractionDate` the returned `DateTime` will be equal to the `datetime` of the last registry found
+see [Keeping track of the last time a summary was retrieved > example](README.md#example) for more details.
+
 **Other**
 
 * Updated flutter and dart versions to ">=3.0.0 <4.0.0"
