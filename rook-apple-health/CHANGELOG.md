@@ -1,11 +1,33 @@
 # Changelog
 
+## 0.2.0
+
+**Migrated to data matrix 2.0**
+
+* Added events extraction
+    * Physical Event
+    * Heart Rate Event
+    * Oxygenation Event
+
+**New permissions**
+
+This version added new permissions, please ask your users for permissions again to avoid unexpected behaviour
+
+**New required dependencies**
+
+From this version onwards the rook-apple-health will require the `equatable` package, see
+README `Required depenpendencies` section for more details.
+
+**Other**
+
+* Updated flutter and dart versions to ">=3.0.0 <4.0.0"
+
 ## 0.1.1
 
 * Fixed physical summary crash
-  * To apply update:
-    * Run `flutter pub get` on the root directory
-    * Run `pod update` or `pod install` on the ios directory
+    * To apply update:
+        * Run `flutter pub get` on the root directory
+        * Run `pod update` or `pod install` on the ios directory
 
 ## 0.1.0
 

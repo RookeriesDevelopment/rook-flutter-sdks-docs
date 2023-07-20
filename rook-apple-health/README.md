@@ -9,12 +9,13 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 
 * Check for Apple Health Connect availability.
 * Request permissions.
-* Retrieve a [Sleep Summary](https://docs.tryrook.io/docs/DataStructure/SleepHealth#summaries) from
-  a specific day.
-* Retrieve a [Physical Summary](https://docs.tryrook.io/docs/DataStructure/PhysicalHealth#summaries)
-  from a specific day.
-* Retrieve a [Body Summary](https://docs.tryrook.io/docs/DataStructure/BodyHealth#summaries) from a
-  specific day.
+* Retrieve health data:
+    * [Sleep Summary](https://docs.tryrook.io/docs/DataStructure/SleepHealth#summaries)
+    * [Physical Summary](https://docs.tryrook.io/docs/DataStructure/PhysicalHealth#summaries)
+    * Physical Event
+    * [Body Summary](https://docs.tryrook.io/docs/DataStructure/BodyHealth#summaries)
+    * Heart Rate Event
+    * Oxygenation Event
 
 ## Installation
 
@@ -24,7 +25,18 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 flutter pub add rook_apple_health
 ```
 
-This package requires flutter `3.3.0` or higher.
+### Environment
+
+This package was developed with the following sdk constraints:
+
+* dart: ">=3.0.0 <4.0.0"
+* flutter: ">=3.0.0"
+
+### Required dependencies
+
+To use this package you'll need to add the following dependencies to your project:
+
+* [equatable](https://pub.dev/packages/equatable): ">=2.0.0 <3.0.0"
 
 ### IOS configuration
 
@@ -132,8 +144,7 @@ Call `checkAvailability`, this will return a boolean.
 
 #### Request
 
-There are dedicated functions for
-each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars)
+There are dedicated functions for each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars)
 (Sleep, Physical and Body) to request permissions. These functions follow the
 convention: `request_data_type_Permissions`
 
@@ -152,7 +163,7 @@ void requestPermissions() async {
 }
 ```
 
-### Retrieving data
+### Retrieving health data
 
 To retrieve any type of summary, you need to provide a date. This date cannot be older than the current
 day. See the examples below:
@@ -164,8 +175,8 @@ day. See the examples below:
 | 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday |
 | 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old     |
 
-To get health data, call `get_data_type` and provide a `DateTime` instance of the day you want to
-retrieve the data from.
+To get health data, call `get_data_type` and provide a `DateTime` instance of the day you want to retrieve the data
+from.
 
 For example, if you want to get yesterday's sleep summary, call `getSleepSummary`. It will return
 an `SleepSummary` instance or throw an exception if an error happens
@@ -174,7 +185,9 @@ or if there is no sleep data on that day.
 ```dart
 void getSleepSummary() async {
   try {
-    final date = DateTime.now();
+    final now = DateTime.now().subtract(const Duration(days: 1));
+    final date = DateTime(now.year, now.month, now.day).toUtc();
+
     final result = await manager.getSleepSummary(date);
 
     // Success
@@ -189,31 +202,30 @@ void getSleepSummary() async {
 We store in preferences the last date data was retrieved from (even if that attempt
 resulted in no data being found).
 
-Call `getLastExtractionDate` and provide a `RookDataType`, it will return a `DateTime` instance.
+Call `getLastExtractionDate(AHRookDataType rookDataType)` providing a `AHRookDataType`, e.g. if you want to retrieve
+the last date a `SleepSummary` was retrieved use `AHRookDataType.SLEEP_SUMMARY`.
+
+It will return a `DateTime` instance.
 
 #### Example
 
 Let's suppose that one of your users opens the app on `2023-01-10`, the app then retrieves a sleep
 summary from yesterday (`2023-01-09`) with `getSleepSummary`.
 
-Then the user forgets to open the app until `2023-01-15`, then you'll call `getLastExtractionDate`
-providing `RookDataType.sleepSummary` it will return `2023-01-09` in a DateTime instance. Now, in a loop, you can
-recover data from the days the user did not open the app (`2023-01-10` to `2023-01-14`).
+Then the user forgets to open the app until `2023-01-15`, then you'll
+call `getLastExtractionDate(AHRookDataType rookDataType)`it will return `2023-01-09` in a DateTime instance. Now,
+in a loop, you can recover data from the days the user did not open the app (`2023-01-10` to `2023-01-14`).
 
 An example using sleep summaries is detailed below:
 
 ```dart
-DateTime dateOnly(DateTime date) {
-  return DateTime(date.year, date.month, date.day);
-}
-
 void recoverLostDays() async {
   const oneDay = Duration(days: 1);
-  final today = dateOnly(DateTime.now());
 
-  DateTime date = await manager.getLastExtractionDate(
-    RookDataType.sleepSummary,
-  );
+  final now = DateTime.now().subtract(const Duration(days: 1));
+  final today = DateTime(now.year, now.month, now.day).toUtc();
+
+  DateTime date = await manager.getLastExtractionDate(HCRookDataType.sleepSummary);
 
   date = date.add(oneDay);
 
@@ -230,3 +242,8 @@ void recoverLostDays() async {
   }
 }
 ```
+
+## Other resources
+
+* See a complete list of `RookHealthConnectManager` methods in 
+  the [API Reference](https://pub.dev/documentation/rook_apple_health/latest/rook_apple_health_manager/RookAppleHealthManager-class.html)
