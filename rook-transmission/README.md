@@ -4,20 +4,42 @@ This package allows apps to send health data to RookConnect servers.
 
 ## Features
 
-* Send sleep summaries
-* Send physical summaries
-* Send physical events
-* Send body summaries
+* Enqueue and upload health data:
+    * Sleep Summary
+    * Physical Summary
+    * Physical Event
+    * Body Summary
+    * Blood Glucose Event
+    * Blood Pressure Event
+    * Body Metrics Event
+    * Heart Rate Event
+    * Hydration Event
+    * Mood Event
+    * Nutrition Event
+    * Oxygenation Event
+    * Stress Event
+    * Temperature Event
 
 ## Installation
 
-![Pub Version](https://img.shields.io/pub/v/rook_transmission?color=%23F44336)
+![Pub Version](https://img.shields.io/pub/v/rook_transmission?style=for-the-badge&logo=flutter&color=7200F7)
 
 ```text
 flutter pub add rook_transmission
 ```
 
-This package requires flutter `3.3.0` or higher.
+### Environment
+
+This package was developed with the following sdk constraints:
+
+* dart: ">=3.0.0 <4.0.0"
+* flutter: ">=3.0.0"
+
+### Required dependencies
+
+To use this package you'll need to add the following dependencies to your project:
+
+* [equatable](https://pub.dev/packages/equatable): ">=2.0.0 <3.0.0"
 
 ## Getting started
 
@@ -66,7 +88,7 @@ Import rook_transmission:
 import 'package:rook_transmission/rook_transmission.dart';
 ```
 
-Create an instance of `RookTransmissionManager` providing :
+Create an instance of `RookTransmissionManager` providing:
 
 * An [apiURL](https://docs.tryrook.io/docs/Definitions#api_url) without HTTPS.
 * A [userID](https://docs.tryrook.io/docs/Definitions#user_id)
@@ -119,7 +141,7 @@ void enqueueSleep() async {
 Remember to send the dates and date times with UTC timezone.
 
 rook_extraction packages like [rook_health_connect](https://pub.dev/packages/rook_health_connect)
-deliver the date with ISO-8601 (UTC) format like `2023-01-06T22:00:22.065Z`.
+deliver an already configured `DateTime` in those cases you don't have to do anything else.
 
 ### Clear queue
 
@@ -140,13 +162,13 @@ void clearSleepSummaryQueue() async {
 
 ### Uploading
 
-To upload (send) all enqueued health data call `uploadAll`, this will upload all types of data and
-delete them from the internal Database.
+To upload (send) all enqueued health data call `upload_data_type`, this will upload the desired type of data and
+delete them from the Database.
 
 ```dart
 void uploadAll() async {
   try {
-    await manager.uploadAll();
+    await manager.uploadSleepSummaries();
 
     // Success
   } catch (error) {
@@ -155,5 +177,7 @@ void uploadAll() async {
 }
 ```
 
-* You can also upload specific types of data these functions will follow the convention:
-  `upload_data_type`.
+## Other resources
+
+* See a complete list of `RookTransmissionManager` methods in
+  the [API Reference](https://pub.dev/documentation/rook_transmission/latest/rook_transmission/RookTransmissionManager-class.html)

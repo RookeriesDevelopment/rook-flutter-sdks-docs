@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.4.0
+
+**Migrated to data matrix 2.0**
+
+* Added events transmission
+    * Blood Glucose Event
+    * Blood Pressure Event
+    * Body Metrics Event
+    * Heart Rate Event
+    * Hydration Event
+    * Mood Event
+    * Nutrition Event
+    * Oxygenation Event
+    * Stress Event
+    * Temperature Event
+
+**New required dependencies**
+
+From this version onwards the rook-transmission will require the `equatable` package, see
+README `Required depenpendencies` section for more details.
+
+**Other**
+
+* Updated flutter and dart versions to ">=3.0.0 <4.0.0"
+* Updated http to ">=1.0.0 <2.0.0"
+* Updated rook-auth to 0.2.0
+
 ## 0.3.3
 
 * Updated schemas to isar `3.1.0+1`. Please verify you have this version before updating.
@@ -12,16 +39,16 @@
 
 * Fixed auth error
 * Changed data types:
-  * BodySummaryItem
-    * temperatureDeltaCelsius → double?
-  * SleepSummaryItem
-    * temperatureMinimumCelsius → double?
-    * temperatureAvgCelsius → double?
-    * temperatureMaxCelsius → double?
-    * temperatureDeltaCelsius → double?
-    * saturationAvgPercentage → double?
-    * saturationMinPercentage → double?
-    * saturationMaxPercentage → double?
+    * BodySummaryItem
+        * temperatureDeltaCelsius → double?
+    * SleepSummaryItem
+        * temperatureMinimumCelsius → double?
+        * temperatureAvgCelsius → double?
+        * temperatureMaxCelsius → double?
+        * temperatureDeltaCelsius → double?
+        * saturationAvgPercentage → double?
+        * saturationMinPercentage → double?
+        * saturationMaxPercentage → double?
 
 ## 0.3.0
 
@@ -38,20 +65,20 @@
 ## 0.2.0
 
 * Added granular data to:
-  * SleepSummaryItem
-  * PhysicalSummaryItem
-  * PhysicalEventItem
-  * BodySummaryItem
+    * SleepSummaryItem
+    * PhysicalSummaryItem
+    * PhysicalEventItem
+    * BodySummaryItem
 
 ## 0.1.0
 
 * Removed following properties from `physical_event_item`
-  * velocityVectorAvgSpeedAndDirection
-  * velocityVectorMaxSpeedAndDirection
-  * positionStartLatLngDeg
-  * positionCentroidLatLngDeg
-  * positionEndLatLngDeg
-  * positionPolylineMapDataSummary
+    * velocityVectorAvgSpeedAndDirection
+    * velocityVectorMaxSpeedAndDirection
+    * positionStartLatLngDeg
+    * positionCentroidLatLngDeg
+    * positionEndLatLngDeg
+    * positionPolylineMapDataSummary
 
 ## 0.0.2
 
