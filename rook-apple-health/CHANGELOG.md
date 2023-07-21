@@ -35,6 +35,7 @@ see [Keeping track of the last time a summary was retrieved > example](README.md
 **Other**
 
 * Updated flutter and dart versions to ">=3.0.0 <4.0.0"
+* Before running your app you MUST run `pod install` or `pod update` in your **/ios** directory
 
 ## 0.1.1
 
