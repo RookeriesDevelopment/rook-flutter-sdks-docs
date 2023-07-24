@@ -251,6 +251,123 @@ void openHealthConnectSettings() async {
 
 ### Retrieving health data
 
+### Retrieving health data
+
+There are 2 types of health data **Summaries** and **Events**.
+
+| Health Data | Timezone (Input / Output) | Oldest date of retrieval | Soonest date of retrieval |
+|-------------|---------------------------|--------------------------|---------------------------|
+| Summary     | UTC                       | 29 days                  | Yesterday                 |
+| Event       | UTC                       | 29 days                  | Today                     |
+
+#### Retrieving health data in UTC
+
+All health data types require a DateTime instance if the date (summary) or datetime (event) you want to retrieve
+data from. When using `get_health_data_type(DateTime date)` the provided `date` is used to create a range
+between `date` (start) and the end of the day (end). This can become tricky specially with
+all the different timezones your users may be in.
+
+For that reason we **only allow UTC when retrieving data**, follow the following examples:
+
+##### Retrieve health data for the whole day of yesterday
+
+Today is **2023-05-26** in Mexico City (**UTC-6**)
+
+To retrieve health data for the whole day of yesterday (**2023-05-25**) call `get_health_data_type(DateTime date)`
+where date is obtained with:
+
+```dart
+
+final now = DateTime.now() // Today 2023-05-26T15:12:20
+    .subtract(const Duration(days: 1)); // Yesterday 2023-05-25T15:12:20
+
+final date = DateTime(now.year, now.month, now.day) // Yesterday 2023-05-25T00:00:00
+    .toUtc(); // Yesterday 2023-05-25T06:00:00Z
+```
+
+As you can see we started obtaining **today's** then subtracted one day to get **yesterday's**, and because we want
+to cover the whole day, all fields after `day` were truncated to zero.
+
+Finally, the date was converted to UTC resulting in **2023-05-25T06:00:00Z** it has **06:00:00** because
+**2023-05-25T00:00:00** in Mexico City is **2023-05-25T06:00:00Z** in UTC.
+
+Internally the SDK will perform the following operations:
+
+1. Use 2023-05-25T06:00:00Z as `start`
+2. Create the range between `start` and the end of the day `start` belongs to.
+
+So the time range will end up like:
+
+`start`: 2023-05-25T06:00:00Z < --- >`end`: 2023-05-26T06:00:00Z
+
+Which in **Mexico City (UTC-6)** is equivalent to:
+
+`start`: 2023-05-25T00:00:00 < --- >`end`: 2023-05-26T00:00:00
+
+##### Retrieve health data for the whole day of today
+
+Today is **2023-05-26** in Mexico City (**UTC-6**)
+
+To retrieve health data for the whole day of today (**2023-05-26**) call `get_health_data_type(DateTime date)`
+where date is obtained with:
+
+```dart
+
+final now = DateTime.now(); // Today 2023-05-26T15:12:20
+final date = DateTime(now.year, now.month, now.day) // Today 2023-05-26T00:00:00
+    .toUtc(); // Today 2023-05-26T06:00:00Z
+```
+
+As you can see we started obtaining **today's**, and because we want health data from the entire day, all fields
+after `day` were truncated to zero.
+
+Finally, the date was converted to UTC resulting in **2023-05-26T00:00:00Z** it has **06:00:00** because
+**2023-05-26T00:00:00** in Mexico City is **2023-05-26T06:00:00Z** in UTC.
+
+Internally the SDK will perform the following operations:
+
+1. Use 2023-05-26T06:00:00Z as `start`
+2. Create the range between `start` and the end of the day `start` belongs to.
+
+So the time range will end up like:
+
+`start`: 2023-05-26T06:00:00Z < --- >`end`: 2023-05-27T06:00:00Z
+
+Which in **Mexico City (UTC-6)** is equivalent to:
+
+`start`: 2023-05-26T00:00:00 < --- >`end`: 2023-05-27T00:00:00
+
+##### Retrieve health data for the rest of the day of today
+
+Today is **2023-05-26** in Mexico City (**UTC-6**)
+
+To retrieve health data for the rest of the day of today (**2023-05-26**)
+call `get_health_data_type(DateTime date)` where date is obtained with:
+
+```dart
+
+final now = DateTime.now() // Today 2023-05-26T12:00:00
+    .toUtc(); // Today 2023-05-26T06:00:00Z
+```
+
+In this case the date was only converted to UTC resulting in **2023-05-26T18:00:00Z** it has **18:00:00** because
+**2023-05-26T12:00:00** in Mexico City is **2023-05-26T18:00:00Z** in UTC.
+
+Internally the SDK will perform the following operations:
+
+1. Use 2023-05-26T18:00:00Z as `start`
+2. Create the range between `start` and the end of the day `start` belongs to
+
+So the time range will end up like:
+
+`start`: 2023-05-26T18:00:00Z < --- >`end`: 2023-05-27T06:00:00Z
+
+Which in **Mexico City (UTC-6)** is equivalent to:
+
+`start`: 2023-05-26T12:00:00 < --- >`end`: 2023-05-27T00:00:00
+
+#### Retrieve summaries
+
 To retrieve any type of summary, you need to provide a date. This date cannot be the current
 day and cannot be older than 29 days. See the examples below:
 
@@ -261,12 +378,10 @@ day and cannot be older than 29 days. See the examples below:
 | 2023-01-08   | 2022-11-01    | No, the date is older than 29 days |
 | 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old        |
 
-To get health data, call `get_data_type` and provide a `DateTime` instance of the day you want to retrieve the data
-from.
+To get health data, call `get_data_type` and provide a DateTime instance of the day you want to retrieve the data from.
 
 For example, if you want to get yesterday's sleep summary, call `getSleepSummary`. It will return
-an `SleepSummary` instance or throw an exception if an error happens
-or if there is no sleep data on that day.
+an `SleepSummary` instance or throw an exception if an error happens.
 
 ```dart
 void getSleepSummary() async {
@@ -283,21 +398,27 @@ void getSleepSummary() async {
 }
 ```
 
-### Keeping track of the last time a summary was retrieved
+##### Keeping track of the last date a summary was retrieved
 
 Health Connect does not allow retrieving data on background, so every time your users open your app
 you should retrieve the data manually to help you retrieve the data of the days the user did not
-open your app. We store in preferences the last date data was retrieved (even if that attempt
-resulted in no data being found).
+open your app. We store in preferences the last date data was retrieved.
 
 Call `getLastExtractionDate(HCRookDataType rookDataType)` providing a `HCRookDataType`, e.g. if you want to retrieve
-the last date a `SleepSummary` was retrieved use `HCRookDataType.SLEEP_SUMMARY`.
+the last date a `SleepSummary` was retrieved use `HCRookDataType.sleepSummary`.
 
-It will return a `DateTime` instance.
+It will return a DateTime instance.
 
+Rules:
+
+* The returned DateTime will be in UTC.
+* The returned DateTime will be the same you provided when retrieving health data.
 * If the stored date is older than 29 days it will be ignored it and a DateNotFoundException will be thrown.
+* If your users are more likely to change locations (timezones), you may have to instead convert the result
+  of `getLastExtractionDate(HCRookDataType rookDataType)` to your user's new timezone, add one day, truncate (if
+  necessary) and convert again to UTC.
 
-#### Example
+##### Last extraction date of a sleep summary example
 
 Let's suppose that one of your users opens the app on `2023-01-10`, the app then retrieves a sleep
 summary from yesterday (`2023-01-09`) with `getSleepSummary`.
@@ -312,7 +433,7 @@ An example using sleep summaries is detailed below:
 void recoverLostDays() async {
   const oneDay = Duration(days: 1);
 
-  final now = DateTime.now().subtract(const Duration(days: 1));
+  final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day).toUtc();
 
   DateTime date = await manager.getLastExtractionDate(HCRookDataType.sleepSummary);
@@ -321,7 +442,7 @@ void recoverLostDays() async {
 
   while (date.isBefore(today)) {
     try {
-      final sleepSummary = await manager.getSleepSummary(date);
+      final result = await manager.getSleepSummary(date);
 
       // Success
     } catch (error) {
@@ -333,69 +454,97 @@ void recoverLostDays() async {
 }
 ```
 
-### Timezones
+#### Retrieve events
 
-All DateTime objects returned by this SDK are in `UTC`, and you also must provide all DateTime objects in `UTC` as well.
+To retrieve any type of event, you need to provide a date. This date cannot be older than 29 days. See the examples
+below:
 
-#### Retrieving health data in UTC
+| Current date | Provided date | Is valid?                          |
+|--------------|---------------|------------------------------------|
+| 2023-01-08   | 2023-01-08    | Yes, the date is from today        |
+| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday    |
+| 2023-01-08   | 2022-11-01    | No, the date is older than 29 days |
+| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old        |
 
-When you request data using `getSleepSummary(DateTime date)` the provided `date` is used to create a range
-where `date` is the `start` and `end` is created adding **23:59:59** to `start`. This can become tricky specially with
-all the different timezones your users may be in.
+To get health data, call `get_data_type` and provide a DateTime instance of the day you want to retrieve the data
+from.
 
-For that reason we only allow UTC when retrieving data, use the following as an example:
-
-Today is **2023-05-26** in Mexico (**UTC-6**)
-
-To retrieve a SleepSummary from yesterday (**2023-05-25**) call `getSleepSummary(DateTime date)` where date is
-obtained with:
+For example, if you want to get today's physical events, call `getPhysicalEvents`. It will return
+an `List<HCPhysicalEvent>` or throw an exception if an error happens or `RecordsNotFoundException` if there is no
+physical data on that day.
 
 ```dart
-final now = DateTime.now() // Today 2023-05-26T15:12:20
-        .subtract(const Duration(days: 1)); // Yesterday 2023-05-25T15:12:20
+void getPhysicalEvents() async {
+  try {
+    final now = DateTime.now();
+    final date = DateTime(now.year, now.month, now.day).toUtc();
 
-final date = DateTime(now.year, now.month, now.day) // Yesterday 2023-05-25T00:00:00
-        .toUtc(); // Yesterday 2023-05-25T06:00:00Z
+    final result = await manager.getPhysicalEvents(date);
+
+    // Success
+  } catch (error) {
+    // Manage error
+  }
+}
 ```
 
-As you can see we started obtaining **today's** then subtracted one day to get **yesterday's**, and because this date
-will be used as the `start`, all fields after `day` were truncated (ignored or set to zero) in the `date` building.
+##### Keeping track of the last date an event was retrieved
 
-Finally, the date was converted to UTC resulting in **2023-05-25T06:00:00Z** it has **06:00:00** because
-**2023-05-25T00:00:00** in Mexico is **2023-05-25T06:00:00Z** in UTC.
+Health Connect does not allow retrieving data on background, so every time your users open your app
+you should retrieve the data manually to help you retrieve the data of the days the user did not
+open your app. We store in preferences the last date data was retrieved.
 
-Internally the SDK will perform the following operations:
+Call `getLastExtractionDate(HCRookDataType rookDataType)` providing a `HCRookDataType`, e.g. if you want to retrieve
+the last date a `PhysicalEvent` was retrieved use `HCRookDataType.physicalEvent`.
 
-1. Use 2023-05-25T06:00:00Z as `start`
-2. Create a copy of `start` named `end` and add **23:59:59**
+It will return a DateTime instance.
 
-So the time range will end up like:
+Rules:
 
-`start`: 2023-05-25T06:00:00Z < --- >`end`: 2023-05-26T05:59:59Z
-
-Which in **UTC-6** is equivalent to:
-
-`start`: 2023-05-25T00:00:00 < --- >`end`: 2023-05-25T23:59:59
-
-#### What about last extraction date?
-
-When you use `getLastExtractionDate(HCRookDataType rookDataType)` the returned DateTime is the same you provided when retrieving health data.
-
-Using the example from [above](#retrieving-health-data-in-utc); `getLastExtractionDate(HCRookDataType rookDataType)`
-will return **2023-05-25T06:00:00Z** which as you can notice, is already in UTC.
-
-So, to retrieve health data from the following day all you need to do is add one day:
-
-```kotlin
-val date = manager.getLastExtractionDate(HCRookDataType.SLEEP_SUMMARY)
-    .plusDays(1)
-```
-
+* The returned DateTime will be in UTC.
+* The returned DateTime will be equal to the date of the last event found.
+* If the stored date is older than 29 days it will be ignored it and a DateNotFoundException will be thrown.
 * If your users are more likely to change locations (timezones), you may have to instead convert the result
-  of `getLastExtractionDate(HCRookDataType rookDataType)` to your user's timezone, add one day, truncate (if necessary)
-  and convert again to UTC.
+  of `getLastExtractionDate(HCRookDataType rookDataType)` to your user's new timezone, add one day, truncate (if
+  necessary) and convert again to UTC.
+
+##### Last extraction date of a physical event example
+
+Let's suppose that one of your users opens the app on `2023-01-10`, the app then retrieves physical events from
+today (`2023-01-10`) with `getPhysicalEvents`.
+
+Then the user forgets to open the app until `2023-01-15`, then you'll
+call `getLastExtractionDate(HCRookDataType rookDataType)`it will return `2023-01-10` in a DateTime instance. Now,
+in a loop, you can recover data from the days the user did not open the app (`2023-01-10` to `2023-01-14`).
+
+An example using physical events is detailed below:
+
+```dart
+void recoverLostDays() async {
+  const oneDay = Duration(days: 1);
+
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day).toUtc();
+
+  DateTime date = await manager.getLastExtractionDate(HHCRookDataType.physicalEvent);
+
+  // date = date.plusDays(oneDay) Not necessary the returned date belongs to the last event found
+
+  while (date.isBefore(today)) {
+    try {
+      final result = await manager.getPhysicalEvents(date);
+
+      // Success
+    } catch (error) {
+      // Manage error
+    }
+
+    date = date.add(oneDay);
+  }
+}
+```
 
 ## Other resources
 
-* See a complete list of `RookHealthConnectManager` methods in 
+* See a complete list of `RookHealthConnectManager` methods in
   the [API Reference](https://pub.dev/documentation/rook_health_connect/latest/rook_health_connect/RookHealthConnectManager-class.html)
