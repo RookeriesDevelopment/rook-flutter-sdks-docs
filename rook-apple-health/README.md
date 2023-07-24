@@ -143,7 +143,7 @@ Call `checkAvailability`, this will return a boolean.
 
 ### Permissions
 
-#### Request
+#### Request permissions
 
 There are dedicated functions for each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars)
 (Sleep, Physical and Body) to request permissions. These functions follow the

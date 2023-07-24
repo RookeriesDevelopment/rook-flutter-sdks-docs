@@ -182,7 +182,7 @@ Call `checkAvailability` on `RookHealthConnectAvailability`, this will return an
 
 ### Permissions
 
-#### Check
+#### Check permissions
 
 There are dedicated functions for each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars)
 (Sleep, Physical, and Body) to check permissions. These functions follow the convention: `has_data_type_Permissions`
@@ -202,7 +202,7 @@ void checkPermissions() async {
 }
 ```
 
-#### Request
+#### Request permissions
 
 There are dedicated functions for each [Health Pillar](https://docs.tryrook.io/docs/Definitions#health-data-pillars)
 (Sleep, Physical and Body) to request permissions. These functions follow the
