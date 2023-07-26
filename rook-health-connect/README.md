@@ -251,8 +251,6 @@ void openHealthConnectSettings() async {
 
 ### Retrieving health data
 
-### Retrieving health data
-
 There are 2 types of health data **Summaries** and **Events**.
 
 | Health Data | Timezone (Input / Output) | Oldest date of retrieval | Soonest date of retrieval |

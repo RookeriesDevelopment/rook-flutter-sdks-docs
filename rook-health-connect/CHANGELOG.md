@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.0
+
+* When retrieving events if the Event has no data `RecordsNotFoundException` will be thrown.
+* Body pillar events will be divided in intervals of 1 hour.
+* `lastExtractionDate` will follow a different set of rules for Summaries and Events,
+  see [Keeping track of the last date a summary was retrieved](README.md#keeping-track-of-the-last-date-a-summary-was-retrieved)
+  and [Keeping track of the last date an event was retrieved](README.md#keeping-track-of-the-last-date-an-event-was-retrieved)
+  for more details.
+* The ZonedDateTime provided to health data extraction has new rules,
+  see [Retrieving health data](README.md#retrieving-health-data)
+  and [Retrieving health data in UTC](README.md#retrieving-health-data-in-utc) for more details.
+
 ## 0.3.0
 
 **All classes and enums now have HC at the beginning, e.g.:**

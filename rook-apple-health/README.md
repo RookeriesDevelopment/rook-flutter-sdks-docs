@@ -166,22 +166,28 @@ void requestPermissions() async {
 
 ### Retrieving health data
 
-To retrieve any type of summary, you need to provide a date. This date cannot be older than the current
+There are 2 types of health data **Summaries** and **Events**.
+
+| Health Data | Timezone (Input / Output) | Oldest date of retrieval | Soonest date of retrieval |
+|-------------|---------------------------|--------------------------|---------------------------|
+| Summary     | UTC                       | 29 days                  | Yesterday                 |
+| Event       | UTC                       | 29 days                  | Today                     |
+
+#### Retrieve summaries
+
+To retrieve any type of summary, you need to provide a date. This date cannot be the current
 day. See the examples below:
 
-| Current date | Provided date | Is valid?                       |
-|--------------|---------------|---------------------------------|
-| 2023-01-08   | 2023-01-09    | No, the date is from tomorrow   |
-| 2023-01-08   | 2023-01-08    | Yes, the date is from today     |
-| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday |
-| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old     |
+| Current date | Provided date | Is valid?                          |
+|--------------|---------------|------------------------------------|
+| 2023-01-08   | 2023-01-08    | No, the date is from today         |
+| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday    |
+| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old        |
 
-To get health data, call `get_data_type` and provide a `DateTime` instance of the day you want to retrieve the data
-from.
+To get health data, call `get_data_type` and provide a DateTime instance of the day you want to retrieve the data from.
 
 For example, if you want to get yesterday's sleep summary, call `getSleepSummary`. It will return
-an `SleepSummary` instance or throw an exception if an error happens
-or if there is no sleep data on that day.
+an `SleepSummary` instance or throw an exception if an error happens.
 
 ```dart
 void getSleepSummary() async {
@@ -198,24 +204,30 @@ void getSleepSummary() async {
 }
 ```
 
-### Keeping track of the last time a summary was retrieved
+##### Keeping track of the last date a summary was retrieved
 
-We store in preferences the last date data was retrieved
+Health Connect does not allow retrieving data on background, so every time your users open your app
+you should retrieve the data manually to help you retrieve the data of the days the user did not
+open your app. We store in preferences the last date data was retrieved.
 
-Call `getLastExtractionDate(AHRookDataType rookDataType)` providing a `AHRookDataType`, e.g. if you want to retrieve
-the last date a `SleepSummary` was retrieved use `AHRookDataType.SLEEP_SUMMARY`.
+Call `getLastExtractionDate(HCRookDataType rookDataType)` providing a `HCRookDataType`, e.g. if you want to retrieve
+the last date a `SleepSummary` was retrieved use `HCRookDataType.sleepSummary`.
 
-It will return a `DateTime` instance.
+It will return a DateTime instance.
 
-#### Example
+Rules:
+
+* The returned DateTime will be in UTC.
+* The returned DateTime will be the same you provided when retrieving health data.
+
+##### Last extraction date of a sleep summary example
 
 Let's suppose that one of your users opens the app on `2023-01-10`, the app then retrieves a sleep
 summary from yesterday (`2023-01-09`) with `getSleepSummary`.
 
 Then the user forgets to open the app until `2023-01-15`, then you'll
-call `getLastExtractionDate(AHRookDataType rookDataType)`it will return `2023-01-09` or `2023-01-10` (depending on the
-user's timezone) in a DateTime instance. Now, in a loop, you can recover data from the days the user did not open the
-app (`2023-01-10` to `2023-01-14`).
+call `getLastExtractionDate(HCRookDataType rookDataType)`it will return `2023-01-09` in a DateTime instance. Now,
+in a loop, you can recover data from the days the user did not open the app (`2023-01-10` to `2023-01-14`).
 
 An example using sleep summaries is detailed below:
 
@@ -223,16 +235,100 @@ An example using sleep summaries is detailed below:
 void recoverLostDays() async {
   const oneDay = Duration(days: 1);
 
-  final now = DateTime.now().subtract(const Duration(days: 1));
+  final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day).toUtc();
 
-  DateTime date = await manager.getLastExtractionDate(AHRookDataType.sleepSummary);
+  DateTime date = await manager.getLastExtractionDate(HCRookDataType.sleepSummary);
 
-  // date = date.add(oneDay); Not necessary the returned date belongs to the last registry found
+  date = date.add(oneDay);
 
   while (date.isBefore(today)) {
     try {
-      final sleepSummary = await manager.getSleepSummary(date);
+      final result = await manager.getSleepSummary(date);
+
+      // Success
+    } catch (error) {
+      // Manage error
+    }
+
+    date = date.add(oneDay);
+  }
+}
+```
+
+#### Retrieve events
+
+To retrieve any type of event, you need to provide a date. See the examples below:
+
+| Current date | Provided date | Is valid?                          |
+|--------------|---------------|------------------------------------|
+| 2023-01-08   | 2023-01-08    | Yes, the date is from today        |
+| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday    |
+| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old        |
+
+To get health data, call `get_data_type` and provide a DateTime instance of the day you want to retrieve the data
+from.
+
+For example, if you want to get today's physical events, call `getPhysicalEvents`. It will return
+an `List<HCPhysicalEvent>` or throw an exception if an error happens or `RecordsNotFoundException` if there is no
+physical data on that day.
+
+```dart
+void getPhysicalEvents() async {
+  try {
+    final now = DateTime.now();
+    final date = DateTime(now.year, now.month, now.day).toUtc();
+
+    final result = await manager.getPhysicalEvents(date);
+
+    // Success
+  } catch (error) {
+    // Manage error
+  }
+}
+```
+
+##### Keeping track of the last date an event was retrieved
+
+Health Connect does not allow retrieving data on background, so every time your users open your app
+you should retrieve the data manually to help you retrieve the data of the days the user did not
+open your app. We store in preferences the last date data was retrieved.
+
+Call `getLastExtractionDate(HCRookDataType rookDataType)` providing a `HCRookDataType`, e.g. if you want to retrieve
+the last date a `PhysicalEvent` was retrieved use `HCRookDataType.physicalEvent`.
+
+It will return a DateTime instance.
+
+Rules:
+
+* The returned DateTime will be in UTC.
+* The returned DateTime will be equal to the date of the last event found.
+
+##### Last extraction date of a physical event example
+
+Let's suppose that one of your users opens the app on `2023-01-10`, the app then retrieves physical events from
+today (`2023-01-10`) with `getPhysicalEvents`.
+
+Then the user forgets to open the app until `2023-01-15`, then you'll
+call `getLastExtractionDate(HCRookDataType rookDataType)`it will return `2023-01-10` in a DateTime instance. Now,
+in a loop, you can recover data from the days the user did not open the app (`2023-01-10` to `2023-01-14`).
+
+An example using physical events is detailed below:
+
+```dart
+void recoverLostDays() async {
+  const oneDay = Duration(days: 1);
+
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day).toUtc();
+
+  DateTime date = await manager.getLastExtractionDate(HHCRookDataType.physicalEvent);
+
+  // date = date.plusDays(oneDay) Not necessary the returned date belongs to the last event found
+
+  while (date.isBefore(today)) {
+    try {
+      final result = await manager.getPhysicalEvents(date);
 
       // Success
     } catch (error) {

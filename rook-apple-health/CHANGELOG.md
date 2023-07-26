@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0
+
+* Body pillar events will be divided in intervals of 1 hour.
+* `lastExtractionDate` will follow a different set of rules for Summaries and Events,
+  see [Keeping track of the last date a summary was retrieved](README.md#keeping-track-of-the-last-date-a-summary-was-retrieved)
+  and [Keeping track of the last date an event was retrieved](README.md#keeping-track-of-the-last-date-an-event-was-retrieved)
+  for more details.
+* The DateTime provided to health data extraction has new rules,
+  see [Retrieving health data](README.md#retrieving-health-data)  for more details.
+
 ## 0.2.0
 
 **Migrated to data matrix 2.0**
@@ -28,9 +38,6 @@ The following functions have been removed:
 * getBodySummaryLastDate
 
 Instead, you should use `getLastExtractionDate` and provide a `AHRookDataType`
-
-When calling `getLastExtractionDate` the returned `DateTime` will be equal to the `datetime` of the last registry found
-see [Keeping track of the last time a summary was retrieved > example](README.md#example) for more details.
 
 **Other**
 
