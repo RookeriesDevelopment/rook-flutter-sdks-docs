@@ -260,8 +260,8 @@ There are 2 types of health data **Summaries** and **Events**.
 
 #### Retrieving health data in UTC
 
-All health data types require a DateTime instance if the date (summary) or datetime (event) you want to retrieve
-data from. When using `get_health_data_type(DateTime date)` the provided `date` is used to create a range
+All health data types require a DateTime instance of the datetime you want to retrieve data from. When
+using `get_health_data_type(DateTime date)` the provided `date` is used to create a range
 between `date` (start) and the end of the day (end). This can become tricky specially with
 all the different timezones your users may be in.
 

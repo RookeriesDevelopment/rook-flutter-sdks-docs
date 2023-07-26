@@ -173,16 +173,70 @@ There are 2 types of health data **Summaries** and **Events**.
 | Summary     | UTC                       | 29 days                  | Yesterday                 |
 | Event       | UTC                       | 29 days                  | Today                     |
 
+#### Retrieving health data with a DateTime
+
+All health data types require a DateTime instance of the datetime you want to retrieve data from. When
+using `get_health_data_type(DateTime date)` the provided `date` is used to create a range
+between `date` (start) and the end of the day (end) or the current time if `date` is from today.
+
+Follow the following examples:
+
+##### Retrieve health data for the whole day of yesterday
+
+Today is **2023-05-26 15:12:20**
+
+To retrieve health data for the whole day of yesterday (**2023-05-25**) call `get_health_data_type(DateTime date)`
+where date is obtained with:
+
+```dart
+
+final date = DateTime.now() // Today 2023-05-26T15:12:20
+    .subtract(const Duration(days: 1)); // Yesterday 2023-05-25T15:12:20
+```
+
+As you can see we started obtaining **today's** then subtracted one day to get **yesterday's**.
+
+Internally the SDK will perform the following operations:
+
+1. Remove the 15:12:20 of `date` 
+2. Use 2023-05-25T00:00:00 as `start`
+3. Create the range between `start` and the end of the day `start` belongs to.
+
+So the time range will end up like:
+
+`start`: 2023-05-25T00:00:00 < --- >`end`: 2023-05-26T00:00:00
+
+##### Retrieve health data of today
+
+Today is **2023-05-26 15:12:20**
+
+To retrieve health data of today (**2023-05-26**) call `get_health_data_type(DateTime date)` where date is obtained with:
+
+```dart
+
+final date = DateTime.now(); // Today 2023-05-26T15:12:20
+```
+
+Internally the SDK will perform the following operations:
+
+1. Remove the 15:12:20 of `date`
+2. Use 2023-05-26T00:00:00 as `start`
+3. Create the range between `start` and the current time (**15:12:20**)
+
+So the time range will end up like:
+
+`start`: 2023-05-26T00:00:00 < --- >`end`: 2023-05-26T15:12:20
+
 #### Retrieve summaries
 
 To retrieve any type of summary, you need to provide a date. This date cannot be the current
 day. See the examples below:
 
-| Current date | Provided date | Is valid?                          |
-|--------------|---------------|------------------------------------|
-| 2023-01-08   | 2023-01-08    | No, the date is from today         |
-| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday    |
-| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old        |
+| Current date | Provided date | Is valid?                       |
+|--------------|---------------|---------------------------------|
+| 2023-01-08   | 2023-01-08    | No, the date is from today      |
+| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday |
+| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old     |
 
 To get health data, call `get_data_type` and provide a DateTime instance of the day you want to retrieve the data from.
 
@@ -260,11 +314,11 @@ void recoverLostDays() async {
 
 To retrieve any type of event, you need to provide a date. See the examples below:
 
-| Current date | Provided date | Is valid?                          |
-|--------------|---------------|------------------------------------|
-| 2023-01-08   | 2023-01-08    | Yes, the date is from today        |
-| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday    |
-| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old        |
+| Current date | Provided date | Is valid?                       |
+|--------------|---------------|---------------------------------|
+| 2023-01-08   | 2023-01-08    | Yes, the date is from today     |
+| 2023-01-08   | 2023-01-07    | Yes, the date is from yesterday |
+| 2023-01-08   | 2023-01-01    | Yes, the date is 7 days old     |
 
 To get health data, call `get_data_type` and provide a DateTime instance of the day you want to retrieve the data
 from.
