@@ -8,7 +8,7 @@
   see [Keeping track of the last date a summary was retrieved](README.md#keeping-track-of-the-last-date-a-summary-was-retrieved)
   and [Keeping track of the last date an event was retrieved](README.md#keeping-track-of-the-last-date-an-event-was-retrieved)
   for more details.
-* The ZonedDateTime provided to health data extraction has new rules,
+* The DateTime provided to health data extraction has new rules,
   see [Retrieving health data](README.md#retrieving-health-data)
   and [Retrieving health data in UTC](README.md#retrieving-health-data-in-utc) for more details.
 
@@ -33,29 +33,31 @@
     * Stress Event
     * Temperature Event
 
+**New permissions system**
+
+If you are using the old health connect permissions declaration (meta-data tag), you MUST migrate otherwise
+the `permissions` functions won't work, see [Android configuration](README.md#android-configuration) for more details.
+
 **New permissions**
 
-From this version onwards you need to include 4 new READ permissions (Check README to see the full list of permissions
-that you have to add to your manifest):
+From this version onwards you need to include 4 new READ permissions go
+to [Android configuration](README.md#android-configuration) to see the full list of permissions
+that you have to add to your manifest:
 
 * READ_RESPIRATORY_RATE
 * READ_NUTRITION
 * READ_MENSTRUATION
 * READ_POWER
 
-**New permissions system**
-
-If you are using the old health connect permissions declaration (meta-data tag), you MUST migrate otherwise
-the `permissions` functions won't work.
-
 **New required dependencies**
 
 From this version onwards the rook-health-connect will require the `equatable` package, see
-README `Required depenpendencies` section for more details.
+[Required dependencies](README.md#required-dependencies) for more details.
 
 **New timezone requirements**
 
-The DateTime object provided when requesting health data must be in UTC, see README `Timezones` section for more
+The DateTime object provided when requesting health data must be in UTC,
+see [Retrieving health data in UTC](README.md#retrieving-health-data-in-utc) for more
 details.
 
 **Last extraction date**

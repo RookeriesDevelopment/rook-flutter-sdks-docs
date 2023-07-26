@@ -117,7 +117,7 @@ targetSdk 33
 ```
 
 * This package will only work with devices of a minSdk 28 or later. The `minSdk 26` is to keep
-  compatibility with other Rook packages that can be used with older package.
+  compatibility with other Rook packages.
 
 In the app folder create a **proguard-rules.pro** file and add the following:
 

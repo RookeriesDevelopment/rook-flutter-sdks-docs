@@ -8,7 +8,7 @@
   and [Keeping track of the last date an event was retrieved](README.md#keeping-track-of-the-last-date-an-event-was-retrieved)
   for more details.
 * The DateTime provided to health data extraction has new rules,
-  see [Retrieving health data](README.md#retrieving-health-data)  for more details.
+  see [Retrieving health data](README.md#retrieving-health-data) for more details.
 
 ## 0.2.0
 
@@ -25,8 +25,8 @@ This version added new permissions, please ask your users for permissions again 
 
 **New required dependencies**
 
-From this version onwards the rook-apple-health will require the `equatable` package, see
-README `Required depenpendencies` section for more details.
+From this version onwards the rook-health-connect will require the `equatable` package, see
+[Required dependencies](README.md#required-dependencies) for more details.
 
 **Last extraction date**
 
