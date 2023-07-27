@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+
+* Fixed typo in oxygenation events
+* Before running your app you MUST run `pod install` or `pod update` in your **/ios** directory
+
 ## 0.3.0
 
 * Body pillar events will be divided in intervals of 1 hour.
