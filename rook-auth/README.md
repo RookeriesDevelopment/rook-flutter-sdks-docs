@@ -52,12 +52,12 @@ void main() {
 
 You must check authorization every time your app starts or before using other rook packages.
 
-1. Create an instance of `AuthorizationProvider` providing a URL without https.
+1. Create an instance of `AuthorizationProvider`.
 
 ```dart
 import 'package:rook_auth/rook_auth.dart';
 
-final provider = AuthorizationProvider('api2.rookmotion.review');
+final provider = AuthorizationProvider();
 ```
 
 2. call `getAuthorization` providing your client UUID, this will ask the server for a token which

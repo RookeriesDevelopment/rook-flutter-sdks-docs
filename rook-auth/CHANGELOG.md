@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+* Removed auth url requirements
+
 ## 0.2.0
 
 * Updated flutter and dart versions to ">=3.0.0 <4.0.0"
