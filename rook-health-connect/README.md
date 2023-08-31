@@ -57,6 +57,32 @@ the [rook-auth](https://pub.dev/packages/rook_auth) package.
 
 ### Android configuration
 
+In your build.gradle (app) set your min and target sdk version like below:
+
+```groovy
+minSdk 26
+targetSdk 33
+```
+
+* This package will only work with devices of a minSdk 28 or later. The `minSdk 26` is to keep
+  compatibility with other Rook packages.
+
+In the app folder create a **proguard-rules.pro** file and add the following:
+
+```text
+-keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
+```
+
+Finally, in your build.gradle (app) add the `proguard-rules.pro` from previous step:
+
+```groovy
+buildTypes {
+    release {
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+}
+```
+
 In your **AndroidManifest.xml** add a query for Health Connect
 
 ```xml
@@ -97,8 +123,14 @@ Then declare the health permissions used by this package:
 <uses-permission android:name="android.permission.health.READ_POWER" />
 ```
 
-Finally, inside your MainActivity declaration add an intent filter for the Health Connect
-permissions action:
+Finally,
+
+### Privacy policy
+
+Health Connect requires a privacy policy where you inform your users how you will handle and use their data.
+
+To comply with this you'll need an intent filter, inside your MainActivity declaration add an intent filter for the
+Health Connect permissions action:
 
 ```xml
 
@@ -109,31 +141,10 @@ permissions action:
 </activity>
 ```
 
-In your build.gradle (app) set your min and target sdk version like below:
-
-```groovy
-minSdk 26
-targetSdk 33
-```
-
-* This package will only work with devices of a minSdk 28 or later. The `minSdk 26` is to keep
-  compatibility with other Rook packages.
-
-In the app folder create a **proguard-rules.pro** file and add the following:
-
-```text
--keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
-```
-
-Finally, in your build.gradle (app) add the `proguard-rules.pro` from previous step:
-
-```groovy
-buildTypes {
-    release {
-        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-    }
-}
-```
+Finally, you to listen when your app is launched from said intent you can code
+your [own](https://docs.flutter.dev/get-started/flutter-for/android-devs#how-do-i-handle-incoming-intents-from-external-applications-in-flutter)
+implementation from scratch or use a package like [receive_intent](https://pub.dev/packages/receive_intent). You can
+find an example of the second approach in our demo app.
 
 ## Usage
 
@@ -153,17 +164,6 @@ final RookHealthConnectManager manager = RookHealthConnectManager();
 **WARNING:**
 
 * Before calling any method on `manager`, check [availability](#availability).
-
-### Privacy policy
-
-Health Connect requires a privacy policy where you inform your users how you will handle and use their data.
-
-In the [android configuration](#android-configuration) section an intent filter was added to listen
-when your app is launched from said intent you can code
-your [own](https://docs.flutter.dev/get-started/flutter-for/android-devs#how-do-i-handle-incoming-intents-from-external-applications-in-flutter)
-implementation from scratch or use a package
-like [receive_intent](https://pub.dev/packages/receive_intent). You can find an example of the
-second approach in our demo app.
 
 ### Availability
 

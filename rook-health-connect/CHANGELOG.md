@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+* Updated rook-auth (native)
+
 ## 0.4.0
 
 * When retrieving events if the Event has no data `RecordsNotFoundException` will be thrown.
