@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+* Updated rook-auth to 0.3.0
+
 ## 0.4.0
 
 **Migrated to data matrix 2.0**
