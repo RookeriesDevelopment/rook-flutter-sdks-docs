@@ -123,8 +123,6 @@ Then declare the health permissions used by this package:
 <uses-permission android:name="android.permission.health.READ_POWER" />
 ```
 
-Finally,
-
 ### Privacy policy
 
 Health Connect requires a privacy policy where you inform your users how you will handle and use their data.
