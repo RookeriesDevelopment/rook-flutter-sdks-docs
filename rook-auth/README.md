@@ -8,7 +8,7 @@ This is the main package required by all rook packages to enable their usage.
 
 ## Installation
 
-![Pub Version](https://img.shields.io/pub/v/rook_auth?style=for-the-badge&logo=flutter&color=7200F7)
+![Pub Version](https://img.shields.io/pub/v/rook_auth?style=for-the-badge&logo=flutter&label=pubdev&color=7200F7)
 
 ```text
 flutter pub add rook_auth

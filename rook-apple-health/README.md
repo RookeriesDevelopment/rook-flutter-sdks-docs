@@ -19,7 +19,7 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 
 ## Installation
 
-![Pub Version](https://img.shields.io/pub/v/rook_apple_health?style=for-the-badge&logo=flutter&color=7200F7)
+![Pub Version](https://img.shields.io/pub/v/rook_apple_health?style=for-the-badge&logo=flutter&label=pubdev&label=pubdev&color=7200F7)
 
 ```text
 flutter pub add rook_apple_health
@@ -170,8 +170,8 @@ There are 2 types of health data **Summaries** and **Events**.
 
 | Health Data | Timezone (Input / Output) | Oldest date of retrieval | Soonest date of retrieval |
 |-------------|---------------------------|--------------------------|---------------------------|
-| Summary     | UTC                       | 29 days                  | Yesterday                 |
-| Event       | UTC                       | 29 days                  | Today                     |
+| Summary     | UTC                       | N/A                      | Yesterday                 |
+| Event       | UTC                       | N/A                      | Today                     |
 
 #### Retrieving health data with a DateTime
 

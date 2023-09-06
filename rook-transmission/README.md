@@ -22,7 +22,7 @@ This package allows apps to send health data to RookConnect servers.
 
 ## Installation
 
-![Pub Version](https://img.shields.io/pub/v/rook_transmission?style=for-the-badge&logo=flutter&color=7200F7)
+![Pub Version](https://img.shields.io/pub/v/rook_transmission?style=for-the-badge&logo=flutter&label=pubdev&color=7200F7)
 
 ```text
 flutter pub add rook_transmission
