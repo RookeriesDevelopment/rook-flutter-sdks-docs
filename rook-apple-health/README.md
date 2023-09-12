@@ -10,10 +10,10 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 * Check for Apple Health availability.
 * Request permissions.
 * Retrieve health data:
-    * [Sleep Summary](https://docs.tryrook.io/docs/DataStructure/SleepHealth#summaries)
-    * [Physical Summary](https://docs.tryrook.io/docs/DataStructure/PhysicalHealth#summaries)
-    * Physical Event
-    * [Body Summary](https://docs.tryrook.io/docs/DataStructure/BodyHealth#summaries)
+    * [Sleep Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#sleep-health)
+    * [Physical Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
+    * [Physical Event](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
+    * [Body Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#body-health)
     * Heart Rate Event
     * Oxygenation Event
 
@@ -198,7 +198,7 @@ As you can see we started obtaining **today's** then subtracted one day to get *
 
 Internally the SDK will perform the following operations:
 
-1. Remove the 15:12:20 of `date` 
+1. Remove the 15:12:20 of `date`
 2. Use 2023-05-25T00:00:00 as `start`
 3. Create the range between `start` and the end of the day `start` belongs to.
 
@@ -210,7 +210,8 @@ So the time range will end up like:
 
 Today is **2023-05-26 15:12:20**
 
-To retrieve health data of today (**2023-05-26**) call `get_health_data_type(DateTime date)` where date is obtained with:
+To retrieve health data of today (**2023-05-26**) call `get_health_data_type(DateTime date)` where date is obtained
+with:
 
 ```dart
 

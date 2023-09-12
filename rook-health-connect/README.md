@@ -14,10 +14,10 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 * Check for Health Connect APK availability.
 * Check and request permissions.
 * Retrieve health data:
-    * [Sleep Summary](https://docs.tryrook.io/docs/DataStructure/SleepHealth#summaries)
-    * [Physical Summary](https://docs.tryrook.io/docs/DataStructure/PhysicalHealth#summaries)
-    * Physical Event
-    * [Body Summary](https://docs.tryrook.io/docs/DataStructure/BodyHealth#summaries)
+    * [Sleep Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#sleep-health)
+    * [Physical Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
+    * [Physical Event](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
+    * [Body Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#body-health)
     * Blood Glucose Event
     * Blood Pressure Event
     * Body Metrics Event
