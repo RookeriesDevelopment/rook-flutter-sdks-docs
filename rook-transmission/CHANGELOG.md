@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1
+
+* Added `uploadUserTimeZone` to update users timezone, see [Updating user timezone](README.md#updating-user-timezone) for more information.
+
 ## 0.5.0
 
 * Updated rook-auth to 0.3.0
