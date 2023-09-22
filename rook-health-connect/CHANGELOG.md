@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1
+
+* Added Time Zone extraction, see [Retrieving user timezone](README.md#retrieving-user-timezone) for more information.
+
 ## 0.5.0
 
 * Updated rook-auth (native)

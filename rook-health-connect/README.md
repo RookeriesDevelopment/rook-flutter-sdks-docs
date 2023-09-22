@@ -247,6 +247,17 @@ void openHealthConnectSettings() async {
 }
 ```
 
+### Retrieving user timezone
+
+To retrieve time zone information call `getUserTimeZone` it will return a `HCUserTimeZone` instance.
+
+```dart
+class HCUserTimeZone {
+  final String timezone; //  A tz database string describing the area and location.
+  final int offset; // An integer describing the UTC offset hours
+}
+```
+
 ### Retrieving health data
 
 There are 2 types of health data **Summaries** and **Events**.
