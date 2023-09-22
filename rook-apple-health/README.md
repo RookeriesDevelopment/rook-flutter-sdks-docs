@@ -164,6 +164,17 @@ void requestPermissions() async {
 }
 ```
 
+### Retrieving user timezone
+
+To retrieve time zone information call `getUserTimeZone` it will return a `AHUserTimeZone` instance.
+
+```dart
+class AHUserTimeZone {
+  final String timezone; //  A tz database string describing the area and location.
+  final int offset; // An integer describing the UTC offset hours
+}
+```
+
 ### Retrieving health data
 
 There are 2 types of health data **Summaries** and **Events**.

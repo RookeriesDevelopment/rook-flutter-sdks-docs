@@ -1,9 +1,16 @@
 # Changelog
 
+## 0.3.2
+
+* Added Time Zone extraction, see [Retrieving user timezone](README.md#retrieving-user-timezone) for more information.
+
+**Before running your app you MUST run `pod install` or `pod update` in your **/ios** directory**
+
 ## 0.3.1
 
 * Fixed typo in oxygenation events
-* Before running your app you MUST run `pod install` or `pod update` in your **/ios** directory
+
+**Before running your app you MUST run `pod install` or `pod update` in your **/ios** directory**
 
 ## 0.3.0
 
