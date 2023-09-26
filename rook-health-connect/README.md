@@ -144,6 +144,12 @@ your [own](https://docs.flutter.dev/get-started/flutter-for/android-devs#how-do-
 implementation from scratch or use a package like [receive_intent](https://pub.dev/packages/receive_intent). You can
 find an example of the second approach in our demo app.
 
+#### Request data access
+
+When you are developing with the Health Connect SDK data access is unrestricted. In order to have data access when your
+app is launched to the PlayStore you MUST complete the Developer Declaration Form, more
+information [Here](https://developer.android.com/health-and-fitness/guides/health-connect/frequently-asked-questions#request-access).
+
 ## Usage
 
 Import rook_health_connect:
