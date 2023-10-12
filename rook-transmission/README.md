@@ -28,7 +28,7 @@ This package allows apps to send health data to RookConnect servers.
 flutter pub add rook_transmission
 ```
 
-### Environment
+### Development environment
 
 This package was developed with the following sdk constraints:
 
@@ -42,9 +42,6 @@ To use this package you'll need to add the following dependencies to your projec
 * [equatable](https://pub.dev/packages/equatable): ">=2.0.0 <3.0.0"
 
 ## Getting started
-
-To get authorization to use this package, you'll need to install and configure
-the [rook-auth](https://pub.dev/packages/rook_auth) package.
 
 ### Android configuration
 
@@ -80,6 +77,23 @@ void main() {
 }
 ```
 
+### Environment
+
+The `RookTransmissionEnvironment` enum allows to quickly configure the behaviour of **rook-transmission**, e.g. the
+api used to communicate with ROOK servers.
+
+Available environments:
+
+* sandbox ➞ Use this during your app development process.
+* production ➞ Use this ONLY when your app is published to the PlayStore.
+
+You can use the `kDebugMode` property of you app to configure the environment:
+
+```dart
+
+const environment = kDebugMode ? RookTransmissionEnvironment.sandbox : RookTransmissionEnvironment.production;
+```
+
 ## Usage
 
 Import rook_transmission:
@@ -87,6 +101,40 @@ Import rook_transmission:
 ```dart
 import 'package:rook_transmission/rook_transmission.dart';
 ```
+
+### Initialization
+
+To initialize this SDK call `RookTransmissionConfiguration.initRookTransmission` and provide:
+
+* Context
+* [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
+* [Environment](#environment)
+
+```dart
+void initialize() {
+  const environment = kDebugMode
+      ? RookTransmissionEnvironment.sandbox
+      : RookTransmissionEnvironment.production;
+
+  RookTransmissionConfiguration.initRookTransmission(
+    clientUUID,
+    environment,
+  ).then((value) {
+    // Initialized
+  }).catchError((exception) {
+    final error = 'RookTransmissionConfiguration: $exception';
+
+    // Error initializing
+  });
+}
+```
+
+#### Recommendations
+
+When you call `initRookTransmission` an HTTP request is made, so you should only call it once. We recommend to code this
+process in your application's initialization.
+
+### RookTransmissionManager
 
 Create an instance of `RookTransmissionManager` providing:
 

@@ -1,12 +1,21 @@
 # Changelog
 
+## 0.6.0
+
+* Authorization it's now managed by this SDK (dependency on **rook_auth** is no longer required),
+  see [Initialization](README.md#initialization) for more information.
+* Added `RookTransmissionEnvironment` to configure internal behaviour, see [Environment](README.md#environment) for
+  more information.
+* Changed `RookTransmissionManager` constructor parameters,
+  see [RookTransmissionManager](README.md#rooktransmissionmanager) for more information.
+
 ## 0.5.1
 
 * Added `uploadUserTimeZone` to update users timezone, see [Updating user timezone](README.md#updating-user-timezone) for more information.
 
 ## 0.5.0
 
-* Updated rook-auth to 0.3.0
+* Updated rook_auth to 0.3.0
 
 ## 0.4.0
 
@@ -33,7 +42,7 @@ README `Required depenpendencies` section for more details.
 
 * Updated flutter and dart versions to ">=3.0.0 <4.0.0"
 * Updated http to ">=1.0.0 <2.0.0"
-* Updated rook-auth to 0.2.0
+* Updated rook_auth to 0.2.0
 
 ## 0.3.3
 
