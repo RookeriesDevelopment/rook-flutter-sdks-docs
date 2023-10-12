@@ -25,7 +25,7 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 flutter pub add rook_apple_health
 ```
 
-### Environment
+### Development environment
 
 This package was developed with the following sdk constraints:
 
@@ -92,6 +92,23 @@ permission request dialog.
 <string>This app requires permission to write workout data to HealthKit.</string>
 ```
 
+### Environment
+
+The `RookAppleHealthEnvironment` enum allows to quickly configure the behaviour of **rook-users**, e.g. the
+api used to communicate with ROOK servers.
+
+Available environments:
+
+* sandbox ➞ Use this during your app development process.
+* production ➞ Use this ONLY when your app is published to the PlayStore.
+
+You can use the `kDebugMode` property of you app to configure the environment:
+
+```dart
+
+const environment = kDebugMode ? RookAppleHealthEnvironment.sandbox : RookAppleHealthEnvironment.production;
+```
+
 ## Usage
 
 Import rook_apple_health:
@@ -100,34 +117,48 @@ Import rook_apple_health:
 import 'package:rook_apple_health/rook_apple_health.dart';
 ```
 
-Create an instance of `RookAppleHealthManager` providing:
+### Initialization
 
-* A [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
+To initialize this SDK call `RookUsersConfiguration.initRookUsers` and provide:
 
-```dart
-
-final RookAppleHealthManager manager = RookAppleHealthManager(clientUUID);
-```
-
-Call `init` and wait for the result:
+* Context
+* [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
+* [Environment](#environment)
 
 ```dart
-void initialize() async {
-  final manager = RookAppleHealthManager(Secrets.clientUUID);
+void initialize() {
+  const environment = kDebugMode ? RookAppleHealthEnvironment.sandbox : RookAppleHealthEnvironment.production;
 
-  try {
-    final success = await manager.init();
+  RookAppleHealthConfiguration.initRookAppleHealth(
+    Secrets.clientUUID,
+    environment,
+  ).then((value) {
+    // Initialized
+  }).catchError((exception) {
+    final error = 'RookAppleHealthConfiguration: $exception';
 
-    if (success) {
-      // Use RookAppleHealthManager functions
-    } else {
-      // Could not initialize
-    }
-  } catch (error) {
-    // Manage error
-  }
+    // Error initializing
+  });
 }
 ```
+
+#### Recommendations
+
+When you call `initRookUsers` an HTTP request is made, so you should only call it once. We recommend to code this
+process in your application's initialization.
+
+### RookAppleHealthManager
+
+Create an instance of `RookAppleHealthManager`:
+
+```dart
+
+final RookAppleHealthManager manager = RookAppleHealthManager();
+```
+
+**WARNING:**
+
+* Before calling any method on `manager`, check [availability](#availability).
 
 ### Availability
 

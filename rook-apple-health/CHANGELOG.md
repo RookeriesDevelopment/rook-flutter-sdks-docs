@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0
+
+* Authorization it's now managed by this SDK (dependency on **rook_auth** is no longer required),
+  see [Initialization](README.md#initialization) for more information.
+* Added `RookAppleHealthEnvironment` to configure internal behaviour, see [Environment](README.md#environment) for
+  more information.
+* Changed `RookAppleHealthManager` constructor parameters, see [RookAppleHealthManager](README.md#rookapplehealthmanager) for more
+  information.
+
 ## 0.3.2
 
 * Added Time Zone extraction, see [Retrieving user timezone](README.md#retrieving-user-timezone) for more information.
