@@ -14,7 +14,8 @@ their [Users](https://docs.tryrook.io/docs/Definitions/#User) in ROOK server.
 ```text
 flutter pub add rook_users
 ```
-### Environment
+
+### Development environment
 
 This package was developed with the following sdk constraints:
 
@@ -22,9 +23,6 @@ This package was developed with the following sdk constraints:
 * flutter: ">=3.0.0"
 
 ## Getting started
-
-To get authorization to use this package, you'll need to install and configure
-the [rook-auth](https://pub.dev/packages/rook_auth) package.
 
 ### Android configuration
 
@@ -60,6 +58,23 @@ void main() {
 }
 ```
 
+### Environment
+
+The `RookUsersEnvironment` enum allows to quickly configure the behaviour of **rook-users**, e.g. the
+api used to communicate with ROOK servers.
+
+Available environments:
+
+* sandbox ➞ Use this during your app development process.
+* production ➞ Use this ONLY when your app is published to the PlayStore.
+
+You can use the `kDebugMode` property of you app to configure the environment:
+
+```dart
+
+const environment = kDebugMode ? RookUsersEnvironment.sandbox : RookUsersEnvironment.production;
+```
+
 ## Usage
 
 Import rook_users:
@@ -67,6 +82,38 @@ Import rook_users:
 ```dart
 import 'package:rook_users/rook_users.dart';
 ```
+
+### Initialization
+
+To initialize this SDK call `RookUsersConfiguration.initRookUsers` and provide:
+
+* Context
+* [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
+* [Environment](#environment)
+
+```dart
+void initialize() {
+  const environment = kDebugMode ? RookUsersEnvironment.sandbox : RookUsersEnvironment.production;
+
+  RookUsersConfiguration.initRookUsers(
+    Secrets.clientUUID,
+    environment,
+  ).then((value) {
+    // Initialized
+  }).catchError((exception) {
+    final error = 'RookUsersConfiguration: $exception';
+
+    // Error initializing
+  });
+}
+```
+
+#### Recommendations
+
+When you call `initRookUsers` an HTTP request is made, so you should only call it once. We recommend to code this
+process in your application's initialization.
+
+### RookUsersManager
 
 Create an instance of `RookUsersManager` providing:
 
