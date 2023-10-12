@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.6.0
+
+* Authorization it's now managed by this SDK (dependency on **rook_auth** is no longer required),
+  see [Initialization](README.md#initialization) for more information.
+* Added `RookHealthConnectEnvironment` to configure internal behaviour, see [Environment](README.md#environment) for
+  more information.
+* Changed `RookHealthConnectManager` constructor parameters,
+  see [RookHealthConnectManager](README.md#rookhealthconnectmanager) for more information.
+* Removed `getPhysicalStressEvents` and `getBodyMoodEvents` due to always being empty. Will be added in the future if
+  Health Connect adds support for the data they require (The classes `HCMoodEvent` and `HCStressEvent` won't be
+  removed).
+
 ## 0.5.1
 
 * Added Time Zone extraction, see [Retrieving user timezone](README.md#retrieving-user-timezone) for more information.
