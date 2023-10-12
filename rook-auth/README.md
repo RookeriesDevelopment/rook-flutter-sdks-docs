@@ -1,5 +1,9 @@
 # Rook authorization package
 
+> [!WARNING]  
+> This SDK has been deprecated and won't receive updates. All SDKs which had a dependency on rook_auth were
+> updated to manage their own authorization.
+
 This is the main package required by all rook packages to enable their usage.
 
 ## Features

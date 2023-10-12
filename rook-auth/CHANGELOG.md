@@ -1,5 +1,9 @@
 # Changelog
 
+> [!WARNING]  
+> This SDK has been deprecated and won't receive updates. All SDKs which had a dependency on rook_auth were
+> updated to manage their own authorization.
+
 ## 0.3.0
 
 * Removed auth url requirements
