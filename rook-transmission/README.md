@@ -49,7 +49,7 @@ In your build.gradle (app) set your min and target sdk version like below:
 
 ```groovy
 minSdk 26
-targetSdk 33
+targetSdk 34
 ```
 
 ### Logging
