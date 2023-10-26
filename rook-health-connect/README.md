@@ -64,6 +64,10 @@ targetSdk 34
 * This package will only work with devices of a minSdk 28 or later. The `minSdk 26` is to keep
   compatibility with other Rook packages.
 
+#### Obfuscation
+
+If you are using obfuscation consider the following:
+
 In the app folder create a **proguard-rules.pro** file and add the following:
 
 ```text
@@ -79,6 +83,27 @@ buildTypes {
     }
 }
 ```
+
+In your gradle.properties (Project level) add the following to disable R8 full mode:
+
+```properties
+android.enableR8.fullMode=false
+```
+
+If you want to enable full mode add the following rules to proguard-rules.pro:
+
+```text
+# Keep generic signature of Call, Response (R8 full mode strips signatures from non-kept items).
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+
+# With R8 full mode generic signatures are stripped for classes that are not
+# kept. Suspend functions are wrapped in continuations where the type argument
+# is used.
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+```
+
+#### Manifest
 
 In your **AndroidManifest.xml** add a query for Health Connect
 

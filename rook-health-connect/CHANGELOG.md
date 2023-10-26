@@ -15,6 +15,28 @@ This version will only compile against Android 14 (SDK 34). Please follow the st
 * Permissions functions have changed, see [Permissions](README.md#permissions) for more information.
 * Privacy policy configuration has changed, see [Privacy policy](README.md#privacy-policy) for more information.
 * Updated data access links, see [Privacy policy](README.md#request-data-access) for more information.
+* Added new obfuscation rules, see [Obfuscation](README.md#obfuscation) for more information.
+
+### Known issues
+
+If you are using the flutter plugin [receive_intent](https://pub.dev/packages/receive_intent) you may encounter some
+compilation errors, this is because receive_intent is not ready for java 17 and gradle 8+, this can be solved by editing
+the receive_intent build.gradle file, add the following inside the `android` block:
+
+```groovy
+android {
+  namespace "com.bhikadia.receive_intent"
+  
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_17.toString()
+  }
+}
+```
 
 ## 0.6.0
 
