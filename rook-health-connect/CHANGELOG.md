@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.2
+
+* Optimized the number of calls to Health Connect required to extract Temperature Events.
+
 ## 0.7.0
 
 ### Android 14
