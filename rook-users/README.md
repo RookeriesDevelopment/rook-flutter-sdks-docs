@@ -195,3 +195,8 @@ the request will fail and the userID won't be registered or stored.
 RookUser instances are stored in device's shared preferences, if your app is also using shared
 preferences keep in mind that calling `clear` on the SharedPreferences instance will also delete
 this package registries.
+
+## Other resources
+
+* See a complete list of `RookUsersManager` methods in the [API Reference](https://pub.dev/documentation/rook_users/latest/rook_users/RookUsersManager-class.html)
+* Download and compile the demo application from our [Repository](https://github.com/RookeriesDevelopment/rook_demo_app_flutter)

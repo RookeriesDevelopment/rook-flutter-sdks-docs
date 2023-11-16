@@ -663,5 +663,5 @@ void recoverLostDays() async {
 
 ## Other resources
 
-* See a complete list of `RookHealthConnectManager` methods in
-  the [API Reference](https://pub.dev/documentation/rook_health_connect/latest/rook_health_connect/RookHealthConnectManager-class.html)
+* See a complete list of `RookHealthConnectManager` methods in the [API Reference](https://pub.dev/documentation/rook_health_connect/latest/rook_health_connect/RookHealthConnectManager-class.html)
+* Download and compile the demo application from our [Repository](https://github.com/RookeriesDevelopment/rook_demo_app_flutter)
