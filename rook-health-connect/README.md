@@ -230,30 +230,37 @@ import 'package:rook_health_connect/rook_health_connect.dart';
 
 To initialize this SDK call `RookHealthConnectConfiguration.initRookHealthConnect` and provide:
 
-* Context
-* [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
+* [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
+* [secretKey](https://docs.tryrook.io/docs/Definitions/#client_secret)
 * [Environment](#environment)
 * [enableNativeLogs](#logging)
 
+Then to set the userID call `RookHealthConnectConfiguration.setUserID`, this will enable data source updates and will
+configure the owner of each summary en event when extracted.
+
 ```dart
-void initialize() {
+void initialize() async {
   const environment = kDebugMode
       ? RookHealthConnectEnvironment.sandbox
       : RookHealthConnectEnvironment.production;
 
   const enableNativeLogs = kDebugMode;
 
-  RookHealthConnectConfiguration.initRookHealthConnect(
-    clientUUID,
-    environment,
-    enableNativeLogs,
-  ).then((value) {
+  try {
+    final value = await RookHealthConnectConfiguration.initRookHealthConnect(
+      clientUUID,
+      secretKey,
+      environment,
+      enableNativeLogs,
+    );
     // Initialized
-  }).catchError((exception) {
+    // Needed to enable data source updates and to configure the owner of HC summaries and events
+    await RookHealthConnectConfiguration.setUserID(userID);
+  } catch (exception) {
     final error = 'RookHealthConnectConfiguration: $exception';
 
     // Error initializing
-  });
+  }
 }
 ```
 
@@ -268,7 +275,7 @@ Create an instance of `RookHealthConnectManager`:
 
 ```dart
 
-final RookHealthConnectManager manager = RookHealthConnectManager();
+final rookHealthConnectManager = RookHealthConnectManager();
 ```
 
 **WARNING:**
@@ -320,14 +327,10 @@ To request permissions call `requestPermissions` providing a `HCPermission`.
 
 ```dart
 void requestPermissions() async {
-  final result = await rookHealthConnectManager.requestPermissions(HCPermission.all);
+  await rookHealthConnectManager.requestPermissions(HCPermission.all);
 
-  if (result) {
-    // A request to Health Connect to open the permissions screen was send.
-    // Health Connect can receive the request but refuse to open the permissions screen, in those cases 'result' will also be true
-  } else {
-    // The request was not send.
-  }
+  // A request to Health Connect to open the permissions screen was send.
+  // Health Connect can receive the request but refuse to open the permissions screen
 }
 ```
 
@@ -663,5 +666,7 @@ void recoverLostDays() async {
 
 ## Other resources
 
-* See a complete list of `RookHealthConnectManager` methods in the [API Reference](https://pub.dev/documentation/rook_health_connect/latest/rook_health_connect/RookHealthConnectManager-class.html)
-* Download and compile the demo application from our [Repository](https://github.com/RookeriesDevelopment/rook_demo_app_flutter)
+* See a complete list of `RookHealthConnectManager` methods in
+  the [API Reference](https://pub.dev/documentation/rook_health_connect/latest/rook_health_connect/RookHealthConnectManager-class.html)
+* Download and compile the demo application from
+  our [Repository](https://github.com/RookeriesDevelopment/rook_demo_app_flutter)

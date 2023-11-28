@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0
+
+* When requesting permissions the Health Connect data source status will be changed to active.
+* Added setUserID to configure the user of HC summaries and events, see [Initialization](README.md#initialization) for
+  more information.
+* Changed all `clientPassword` instances to `secretKey`.
+
 ## 0.7.2
 
 * Optimized the number of calls to Health Connect required to extract Temperature Events.
