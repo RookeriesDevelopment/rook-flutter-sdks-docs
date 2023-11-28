@@ -87,8 +87,7 @@ import 'package:rook_users/rook_users.dart';
 
 To initialize this SDK call `RookUsersConfiguration.initRookUsers` and provide:
 
-* Context
-* [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
+* [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
 * [Environment](#environment)
 
 ```dart
@@ -117,17 +116,14 @@ process in your application's initialization.
 
 Create an instance of `RookUsersManager` providing:
 
-* A Context
-* An [apiURL](https://docs.tryrook.io/docs/Definitions#api_url) without HTTPS.
-* A [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
-* A [clientPassword](https://docsbeta.tryrook.io/docs/Definitions#client_password)
+* [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
+* [secretKey](https://docs.tryrook.io/docs/Definitions/#client_secret)
 
 ```dart
 
-final RookUsersManager manager = RookUsersManager(
-  'api.rook-connect.dev',
+final rookUsersManager = RookUsersManager(
   clientUUID,
-  clientPassword,
+  secretKey,
 );
 ```
 
@@ -150,11 +146,7 @@ void register() async {
   try {
     await Future.delayed(const Duration(seconds: 1));
 
-    final user = await manager.registerRookUser(
-      clientUUID,
-      userID,
-      UserType.healthConnect,
-    );
+    final user = await rookUsersManager.registerRookUser(userID, UserType.healthConnect);
 
     // Success
   } catch (e) {
@@ -166,26 +158,22 @@ void register() async {
 * Before calling `registerRookUser` we recommend to wait somewhere in between 1 - 3 seconds, so the
   package loads all necessary resources.
 
-### Removing registered users from preferences
+### Removing registered users
 
-This package already manages the case were you need to register a different userID (the new userID
-will replace the previous one in preferences).
-
-If you want to manually remove a userID call `removeUserFromPreferences` and provide the type of
-user you want to remove it will return a boolean indicating if the operation was successful.
+If you want to remove a userID from a data source call `deleteUserFromRook` and provide a userID and a
+userType. Once removed rook servers won't accept any health data from the specified data source.
 
 ```dart
-void remove() async {
+void deleteUser() async {
   try {
-    final success = await manager.removeUserFromPreferences(UserType.healthConnect);
+    await rookUsersManager.deleteUserFromRook(userID, userType);
+
+    // Success
   } catch (e) {
     // Manage error
   }
 }
 ```
-
-* `removeUserFromPreferences` will only delete from local storage, the user will remain registered
-  on server.
 
 ## Additional information
 
@@ -198,5 +186,7 @@ this package registries.
 
 ## Other resources
 
-* See a complete list of `RookUsersManager` methods in the [API Reference](https://pub.dev/documentation/rook_users/latest/rook_users/RookUsersManager-class.html)
-* Download and compile the demo application from our [Repository](https://github.com/RookeriesDevelopment/rook_demo_app_flutter)
+* See a complete list of `RookUsersManager` methods in
+  the [API Reference](https://pub.dev/documentation/rook_users/latest/rook_users/RookUsersManager-class.html)
+* Download and compile the demo application from
+  our [Repository](https://github.com/RookeriesDevelopment/rook_demo_app_flutter)
