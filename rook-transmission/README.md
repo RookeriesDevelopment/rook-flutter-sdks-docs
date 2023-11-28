@@ -106,7 +106,6 @@ import 'package:rook_transmission/rook_transmission.dart';
 
 To initialize this SDK call `RookTransmissionConfiguration.initRookTransmission` and provide:
 
-* Context
 * [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
 * [Environment](#environment)
 
@@ -138,20 +137,16 @@ process in your application's initialization.
 
 Create an instance of `RookTransmissionManager` providing:
 
-* An [apiURL](https://docs.tryrook.io/docs/Definitions#api_url) without HTTPS.
-* A [userID](https://docs.tryrook.io/docs/Definitions#user_id)
-    * The userID must be previously registered using
-      the [rook-users](https://pub.dev/packages/rook_users) package.
-* A [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
-* A [clientPassword](https://docsbeta.tryrook.io/docs/Definitions#client_password)
+* [UserID](https://docs.tryrook.io/docs/Definitions/#user_id)
+* [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
+* [secretKey](https://docs.tryrook.io/docs/Definitions/#client_secret)
 
 ```dart
 
-final RookTransmissionManager manager = RookTransmissionManager(
-  'api.rook-connect.dev',
+final rookTransmissionManager = RookTransmissionManager(
   userID,
   clientUUID,
-  clientPassword,
+  secretKey,
 );
 ```
 
@@ -177,7 +172,7 @@ void enqueueSleep() async {
       timeInBedSeconds: 64800,
     );
 
-    await manager.enqueueSleepSummary(item);
+    await rookTransmissionManager.enqueueSleepSummary(item);
 
     // Success
   } catch (error) {
@@ -199,7 +194,7 @@ call `clearQueued_data_type`:
 ```dart
 void clearSleepSummaryQueue() async {
   try {
-    await manager.clearQueuedSleepSummaries();
+    await rookTransmissionManager.clearQueuedSleepSummaries();
 
     // Success
   } catch (error) {
@@ -216,7 +211,7 @@ delete them from the Database.
 ```dart
 void uploadAll() async {
   try {
-    await manager.uploadSleepSummaries();
+    await rookTransmissionManager.uploadSleepSummaries();
 
     // Success
   } catch (error) {

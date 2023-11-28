@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0
+
+* Changed all `clientPassword` instances to `secretKey`.
+
 ## 0.6.0
 
 * Authorization it's now managed by this SDK (dependency on **rook_auth** is no longer required),
