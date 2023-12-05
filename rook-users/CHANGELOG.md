@@ -3,7 +3,7 @@
 ## 0.5.0
 
 * When registering a user the Health Connect data source status will be changed to active.
-* Replaced `removeUserFromPreferences` with `deleteUserFromRook`, this function will delete from both server and
+* Replaced `removeUserFromPreferences` with `deleteUserFromRook`, this function will remove from both server and
   preferences, see [Removing registered users](README.md#removing-registered-users) for more information.
 * Changed all `clientPassword` instances to `secretKey`.
 
