@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.1
+
+* If the userID is not initialized a `UserNotInitializedException` will be thrown.
+
 ## 0.8.0
 
 * When requesting permissions the Health Connect data source status will be changed to active.
