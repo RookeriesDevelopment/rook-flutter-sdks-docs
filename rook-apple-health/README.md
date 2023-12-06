@@ -10,12 +10,12 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 * Check for Apple Health availability.
 * Request permissions.
 * Retrieve health data:
-    * [Sleep Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#sleep-health)
-    * [Physical Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
-    * [Physical Event](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
-    * [Body Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#body-health)
-    * Heart Rate Event
-    * Oxygenation Event
+    * [Sleep Summary](https://docs.tryrook.io/docs/rookconnect/data-structure/#summary-of-sleep-health)
+    * [Physical Summary](https://docs.tryrook.io/docs/rookconnect/data-structure/#summary-of-physical-activity)
+    * [Physical Event (Activity)](https://docs.tryrook.io/docs/rookconnect/data-structure/#activity-event)
+    * [Physical individual events](https://docs.tryrook.io/docs/rookconnect/data-structure/#2-physical-health)
+    * [Body Summary](https://docs.tryrook.io/docs/rookconnect/data-structure/#summary-of-body-health)
+    * [Body individual events](https://docs.tryrook.io/docs/rookconnect/data-structure/#4-body-health)
 
 ## Installation
 
@@ -119,9 +119,8 @@ import 'package:rook_apple_health/rook_apple_health.dart';
 
 ### Initialization
 
-To initialize this SDK call `RookUsersConfiguration.initRookUsers` and provide:
+To initialize this SDK call `RookAppleHealthConfiguration.initRookAppleHealth` and provide:
 
-* Context
 * [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
 * [Environment](#environment)
 
@@ -439,5 +438,5 @@ void recoverLostDays() async {
 
 ## Other resources
 
-* See a complete list of `RookAppleHealthManager` methods in the [API Reference](https://pub.dev/documentation/rook_apple_health/latest/rook_apple_health_manager/RookAppleHealthManager-class.html)
+* See a complete list of `RookAppleHealthManager` methods in the [API Reference](https://pub.dev/documentation/rook_apple_health/latest/rook_apple_health/RookAppleHealthManager-class.html)
 * Download and compile the demo application from our [Repository](https://github.com/RookeriesDevelopment/rook_demo_app_flutter)

@@ -1,8 +1,0 @@
-{
-  "label": "ROOK-Auth",
-  "position": 1,
-  "link": {
-    "type": "generated-index",
-    "description": "Authorize packages for usage"
-  }
-}

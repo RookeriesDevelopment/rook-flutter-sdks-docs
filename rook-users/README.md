@@ -117,7 +117,7 @@ process in your application's initialization.
 Create an instance of `RookUsersManager` providing:
 
 * [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
-* [secretKey](https://docs.tryrook.io/docs/Definitions/#client_secret)
+* [secretKey](https://docs.tryrook.io/docs/Definitions/#secret_key)
 
 ```dart
 

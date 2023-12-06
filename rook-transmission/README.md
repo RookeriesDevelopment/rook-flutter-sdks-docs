@@ -139,7 +139,7 @@ Create an instance of `RookTransmissionManager` providing:
 
 * [UserID](https://docs.tryrook.io/docs/Definitions/#user_id)
 * [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
-* [secretKey](https://docs.tryrook.io/docs/Definitions/#client_secret)
+* [secretKey](https://docs.tryrook.io/docs/Definitions/#secret_key)
 
 ```dart
 

@@ -14,20 +14,12 @@ of Rook Extraction, a series of packages dedicated to extracting Health Data fro
 * Check for Health Connect APK availability.
 * Check and request permissions.
 * Retrieve health data:
-    * [Sleep Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#sleep-health)
-    * [Physical Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
-    * [Physical Event](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#physical-health)
-    * [Body Summary](https://docs.tryrook.io/docs/ROOKConnect/DataStructure/#body-health)
-    * Blood Glucose Event
-    * Blood Pressure Event
-    * Body Metrics Event
-    * Heart Rate Event
-    * Hydration Event
-    * Mood Event
-    * Nutrition Event
-    * Oxygenation Event
-    * Stress Event
-    * Temperature Event
+    * [Sleep Summary](https://docs.tryrook.io/docs/rookconnect/data-structure/#summary-of-sleep-health)
+    * [Physical Summary](https://docs.tryrook.io/docs/rookconnect/data-structure/#summary-of-physical-activity)
+    * [Physical Event (Activity)](https://docs.tryrook.io/docs/rookconnect/data-structure/#activity-event)
+    * [Physical individual events](https://docs.tryrook.io/docs/rookconnect/data-structure/#2-physical-health)
+    * [Body Summary](https://docs.tryrook.io/docs/rookconnect/data-structure/#summary-of-body-health)
+    * [Body individual events](https://docs.tryrook.io/docs/rookconnect/data-structure/#4-body-health)
 
 ## Installation
 
@@ -231,7 +223,7 @@ import 'package:rook_health_connect/rook_health_connect.dart';
 To initialize this SDK call `RookHealthConnectConfiguration.initRookHealthConnect` and provide:
 
 * [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
-* [secretKey](https://docs.tryrook.io/docs/Definitions/#client_secret)
+* [secretKey](https://docs.tryrook.io/docs/Definitions/#secret_key)
 * [Environment](#environment)
 * [enableNativeLogs](#logging)
 
@@ -304,7 +296,7 @@ Call `checkAvailability` on `RookHealthConnectAvailability`, this will return an
 To check permissions call `checkPermissions` and provide a `HCPermission`, available permissions:
 
 * SLEEP - [Sleep Health](https://docs.tryrook.io/docs/Definitions/#sleep-health-data-pillar) Data Pillar permissions.
-* PHYSICAL - [Physical Health](https://docs.tryrook.io/docs/Definitions/#body-health-data-pillar) Data Pillar
+* PHYSICAL - [Physical Health](https://docs.tryrook.io/docs/Definitions/#physical-health-data-pillar) Data Pillar
   permissions.
 * BODY - [Body Health](https://docs.tryrook.io/docs/Definitions/#body-health-data-pillar) Data Pillar permissions.
 * ALL - All Health Data Pillar permissions.
